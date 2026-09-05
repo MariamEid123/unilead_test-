@@ -13,6 +13,35 @@
   margin-bottom: var(--space-5);
 }
 
+.learning__path {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: calc(var(--space-4) * -1) 0 var(--space-5);
+  color: var(--color-text-faint);
+  font-size: var(--fs-sm);
+  overflow-x: auto;
+  padding-bottom: var(--space-1);
+}
+
+.learning__path-step {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.learning__path-step--done {
+  color: var(--color-success);
+}
+
+.learning__path-step--active {
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+.learning__path-arrow {
+  color: var(--color-border);
+}
+
 .learning__layout {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -22,6 +51,30 @@
 
 .learning__section {
   margin-bottom: var(--space-5);
+}
+
+.learning__lesson-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  align-items: center;
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.learning__lesson-label,
+.learning__lesson-next {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+
+.learning__lesson-label {
+  color: var(--color-text);
+}
+
+.learning__lesson-next {
+  color: var(--color-primary);
 }
 
 .learning__section:last-child {
@@ -54,5 +107,10 @@
   }
   .learning__actions > * {
     width: 100%;
+  }
+
+  .learning__lesson-intro {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

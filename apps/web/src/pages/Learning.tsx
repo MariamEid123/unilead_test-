@@ -60,6 +60,17 @@ export default function Learning() {
     <div className="page learning">
       <div className="learning__eyebrow">{s.course.code}</div>
       <h1 className="learning__title">{activeCompetency.name}</h1>
+      <div className="learning__path" aria-label="Learning path">
+        <span className="learning__path-step learning__path-step--done">Learn</span>
+        <span className="learning__path-arrow">→</span>
+        <span className="learning__path-step learning__path-step--active">Understand</span>
+        <span className="learning__path-arrow">→</span>
+        <span className="learning__path-step">Try</span>
+        <span className="learning__path-arrow">→</span>
+        <span className="learning__path-step">Practice</span>
+        <span className="learning__path-arrow">→</span>
+        <span className="learning__path-step">Apply</span>
+      </div>
 
       <div className="learning__layout">
         <Sidebar
@@ -70,6 +81,10 @@ export default function Learning() {
 
         <div className="learning__content">
           <Card padding="lg">
+            <div className="learning__lesson-intro">
+              <span className="learning__lesson-label">Current lesson</span>
+              <span className="learning__lesson-next">Next: Practice this skill</span>
+            </div>
             {sections.map((sec) => (
               <div key={sec.id} className="learning__section">
                 <h2 className="learning__section-heading">{sec.heading}</h2>
@@ -88,7 +103,7 @@ export default function Learning() {
                 navigate('/my-learning/practice');
               }}
             >
-              Continue to Practice
+              Next: Practice →
             </Button>
           </div>
         </div>
