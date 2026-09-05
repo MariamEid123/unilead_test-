@@ -63,7 +63,7 @@ export default function Login() {
     <div className="signup">
       <div className="signup__panel">
         <div className="signup__brand">
-          <img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> UniLead
+          <img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> 
         </div>
         <h2 className="signup__headline">Welcome back.</h2>
         <p className="signup__subtext muted">

@@ -70,6 +70,7 @@ export default function Simulation() {
 
   return (
     <div className="page-narrow simulation">
+      <button className="simulation__back" type="button" onClick={() => navigate('/my-learning/practice')}>← Back</button>
       <div className="simulation__eyebrow">Apply & Review</div>
       <h1 className="simulation__title">PID Simulation</h1>
       <p className="muted simulation__subtitle">

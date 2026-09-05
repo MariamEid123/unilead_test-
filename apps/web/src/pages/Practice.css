@@ -47,6 +47,31 @@
   margin-top: var(--space-5);
 }
 
+.practice__assignment-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  border-color: var(--color-primary-light);
+  background: var(--color-primary-light);
+}
+
+.practice__assignment-title {
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: var(--fs-lg);
+}
+
+@media (max-width: 600px) {
+  .practice__assignment-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .practice__assignment-card .btn {
+    width: 100%;
+  }
+}
+
 @media (max-width: 600px) {
   .practice__actions {
     flex-direction: column-reverse;

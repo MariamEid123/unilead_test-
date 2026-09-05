@@ -66,12 +66,24 @@ export default function Practice() {
 
   return (
     <div className="page-narrow practice">
+      <button className="practice__back" type="button" onClick={() => navigate('/my-learning/learning')}>← Back</button>
       <div className="practice__eyebrow">Practice Task</div>
       <h1 className="practice__title">{task.title}</h1>
 
       <Card padding="lg" className="practice__section">
         <h3 className="practice__section-title">Objective</h3>
         <p className="muted">{task.objective}</p>
+      </Card>
+
+      <Card padding="lg" className="practice__assignment-card">
+        <div>
+          <span className="practice__eyebrow">Next activity</span>
+          <h2 className="practice__assignment-title">Assignment: apply what you learned</h2>
+          <p className="muted">Complete a short task after the simulation to show your reasoning.</p>
+        </div>
+        <Button variant="secondary" onClick={() => navigate('/my-learning/assignment')}>
+          Start Assignment
+        </Button>
       </Card>
 
       <Card padding="lg" className="practice__section">

@@ -89,12 +89,12 @@ export default function SignUp() {
     <div className="signup">
       <div className="signup__panel">
         <div className="signup__brand">
-          <img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> UniLead
+          <img className="signup__logo" src="/unilead-logo.svg" alt="UniLead" />
         </div>
-        <h2 className="signup__headline">Build real, demonstrated skill.</h2>
+        <h2 className="signup__headline">Your learning journey starts here.</h2>
         <p className="signup__subtext muted">
-          A competency-based way to learn — you move forward by showing what you can actually do,
-          not just by finishing videos.
+          <strong>Learn. Practice. Apply. Grow.</strong><br />
+          Build your skills, practice what you learn, and move forward with confidence.
         </p>
       </div>
 

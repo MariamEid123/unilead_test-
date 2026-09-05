@@ -58,6 +58,7 @@ export default function Learning() {
 
   return (
     <div className="page learning">
+      <button className="learning__back" type="button" onClick={() => navigate('/my-learning')}>← Back</button>
       <div className="learning__eyebrow">{s.course.code}</div>
       <h1 className="learning__title">{activeCompetency.name}</h1>
       <div className="learning__path" aria-label="Learning path">
@@ -80,7 +81,7 @@ export default function Learning() {
         />
 
         <div className="learning__content">
-          <Card padding="lg">
+          <Card padding="lg" id="lesson-content">
             <div className="learning__lesson-intro">
               <span className="learning__lesson-label">Current lesson</span>
               <span className="learning__lesson-next">Next: Practice this skill</span>
@@ -92,6 +93,33 @@ export default function Learning() {
               </div>
             ))}
           </Card>
+
+          <section className="learning__materials" aria-labelledby="materials-title">
+            <div className="learning__materials-header">
+              <div>
+                <span className="learning__lesson-label">Use when you need another explanation</span>
+                <h2 id="materials-title">Learning materials</h2>
+              </div>
+              <span className="muted learning__materials-count">3 resources</span>
+            </div>
+            <div className="learning__materials-grid">
+              {[
+                { type: 'Reading', title: `${activeCompetency.name}: the essentials`, detail: 'A short explanation of the core idea.', time: '8 min' },
+                { type: 'Slides', title: 'Key ideas at a glance', detail: 'Review the concepts before you try them.', time: '5 min' },
+                { type: 'Resource', title: 'Worked example', detail: 'See the reasoning step by step.', time: '6 min' },
+              ].map((material) => (
+                <article className="learning__material" key={material.type}>
+                  <span className="learning__material-type">{material.type}</span>
+                  <h3>{material.title}</h3>
+                  <p className="muted">{material.detail}</p>
+                  <div className="learning__material-footer">
+                    <span className="muted">{material.time}</span>
+                    <button type="button" className="learning__material-action" onClick={() => document.getElementById('lesson-content')?.scrollIntoView({ behavior: 'smooth' })}>View lesson</button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
 
           <div className="learning__actions">
             <Button variant="secondary" onClick={() => navigate('/my-learning/ai-coach')}>

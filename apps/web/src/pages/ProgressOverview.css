@@ -2,6 +2,9 @@
   margin-bottom: var(--space-5);
 }
 
+.progress-overview__back { padding: 0; margin-bottom: var(--space-4); border: 0; background: transparent; color: var(--color-text-muted); font: inherit; font-size: var(--fs-sm); font-weight: 700; cursor: pointer; }
+.progress-overview__back:hover { color: var(--color-primary); }
+
 .progress-overview__title {
   font-size: var(--fs-2xl);
   font-weight: 800;
@@ -11,6 +14,31 @@
 .progress-overview__summary {
   margin-bottom: var(--space-6);
 }
+
+.progress-overview__summary-top, .progress-overview__section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
+.progress-overview__summary-top { margin-bottom: var(--space-3); }
+.progress-overview__summary-label, .progress-overview__kicker { display: block; color: var(--color-primary); font-size: var(--fs-xs); font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.progress-overview__percentage { display: block; margin-top: var(--space-1); font-size: var(--fs-3xl); line-height: 1; }
+.progress-overview__dashboard-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: var(--space-5); margin-bottom: var(--space-5); }
+.progress-overview__section-heading h2, .progress-overview__next h2 { margin-top: var(--space-1); font-size: var(--fs-lg); }
+.progress-overview__journey-list { list-style: none; margin: var(--space-5) 0 0; padding: 0; }
+.progress-overview__journey-list li + li { margin-top: var(--space-2); }
+.progress-overview__journey-list button { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-2) 0; border: 0; background: transparent; color: var(--color-text-muted); font: inherit; text-align: left; cursor: pointer; }
+.progress-overview__journey-symbol { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--color-neutral-light); color: var(--color-text-faint); font-weight: 800; }
+.is-done .progress-overview__journey-symbol { background: var(--color-success-light); color: var(--color-success); }
+.is-current .progress-overview__journey-symbol { background: var(--color-primary-light); color: var(--color-primary); }
+.is-current button { color: var(--color-text); font-weight: 800; }
+.progress-overview__next { background: var(--color-primary-dark); color: var(--color-surface); }
+.progress-overview__next .progress-overview__kicker { color: var(--color-accent); }
+.progress-overview__next h2 { font-size: var(--fs-xl); }
+.progress-overview__next p { margin: var(--space-3) 0 var(--space-5); color: rgba(255,255,255,.75); }
+.progress-overview__activities { margin-bottom: var(--space-6); }
+.progress-overview__activity-list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+.progress-overview__activity { padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); background: var(--color-success-light); color: var(--color-success); font-size: var(--fs-sm); font-weight: 700; }
+.progress-overview__complete { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-6); border-color: var(--color-success-light); background: var(--color-success-light); }
+.progress-overview__complete-icon { display: grid; place-items: center; width: 48px; height: 48px; flex: 0 0 auto; border-radius: 50%; background: var(--color-success); color: var(--color-surface); font-size: var(--fs-xl); font-weight: 800; }
+.progress-overview__complete h2 { font-size: var(--fs-xl); }
+.progress-overview__complete p { margin-top: var(--space-1); }
 
 .progress-overview__subheading {
   font-size: var(--fs-lg);
@@ -25,4 +53,10 @@
 .progress-overview__cta {
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 760px) {
+  .progress-overview__dashboard-grid { grid-template-columns: 1fr; }
+  .progress-overview__complete { align-items: flex-start; flex-direction: column; }
+  .progress-overview__complete .btn { width: 100%; }
 }

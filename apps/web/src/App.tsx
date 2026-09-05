@@ -17,6 +17,7 @@ import DiagnosticResults from './pages/DiagnosticResults';
 import Learning from './pages/Learning';
 import AICoach from './pages/AICoach';
 import Practice from './pages/Practice';
+import Assignment from './pages/Assignment';
 import Remediation from './pages/Remediation';
 import ApplyReview from './pages/ApplyReview';
 import Simulation from './pages/Simulation';
@@ -67,6 +68,7 @@ export default function App() {
         <Route path="/my-learning/learning" element={<ProtectedRoute><Learning /></ProtectedRoute>} />
         <Route path="/my-learning/ai-coach" element={<ProtectedRoute><AICoach /></ProtectedRoute>} />
         <Route path="/my-learning/practice" element={<ProtectedRoute><Practice /></ProtectedRoute>} />
+        <Route path="/my-learning/assignment" element={<ProtectedRoute><Assignment /></ProtectedRoute>} />
         <Route path="/my-learning/remediation" element={<ProtectedRoute><Remediation /></ProtectedRoute>} />
 
         <Route path="/apply-review" element={<ProtectedRoute><ApplyReview /></ProtectedRoute>} />

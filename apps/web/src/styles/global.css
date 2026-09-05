@@ -101,3 +101,8 @@ button {
   overflow: hidden;
   clip: rect(0 0 0 0);
 }
+
+.learning__back, .practice__back, .simulation__back, .assignment__back, .review__back {
+  display: block; padding: 0; margin-bottom: var(--space-4); border: 0; background: transparent; color: var(--color-text-muted); font: inherit; font-size: var(--fs-sm); font-weight: 700; cursor: pointer;
+}
+.learning__back:hover, .practice__back:hover, .simulation__back:hover, .assignment__back:hover, .review__back:hover { color: var(--color-primary); }

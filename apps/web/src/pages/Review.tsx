@@ -69,6 +69,7 @@ export default function Review() {
 
   return (
     <div className="page-narrow review">
+      <button className="review__back" type="button" onClick={() => navigate('/apply-review/simulation')}>← Back</button>
       <div className="review__eyebrow">Apply & Review</div>
       <h1 className="review__title">Your Evidence</h1>
       <p className="muted review__subtitle">
