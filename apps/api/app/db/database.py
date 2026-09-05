@@ -87,6 +87,9 @@ _LIGHTWEIGHT_COLUMNS = {
         ("email_verification_code_hash", "VARCHAR(64)", None),
         ("email_verification_expires_at", "DATETIME", None),
         ("email_verification_sent_at", "DATETIME", None),
+        ("password_reset_code_hash", "VARCHAR(64)", None),
+        ("password_reset_expires_at", "DATETIME", None),
+        ("password_reset_sent_at", "DATETIME", None),
     ],
 }
 

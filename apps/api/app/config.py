@@ -1,4 +1,4 @@
-"""Unified configuration for the Compass + AI Education gateway.
+"""Unified configuration for the UniLead + AI Education gateway.
 
 Combines the original Platform/backend config (CORS origins, host, port)
 with the AI Education LLM provider settings (provider type, model, keys).
@@ -45,7 +45,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # --- Server (Compass API) ---
+    # --- Server (UniLead API) ---
     host: str = "0.0.0.0"
     port: int = 8000
     cors_origins: str = DEFAULT_ORIGINS
@@ -83,7 +83,7 @@ class Settings(BaseSettings):
     smtp_port: int = 587
     smtp_username: str = ""
     smtp_password: str = ""
-    smtp_from_email: str = "no-reply@compass.edu"
+    smtp_from_email: str = "no-reply@UniLead.edu"
     smtp_starttls: bool = True
     verification_code_length: int = 6
     verification_code_ttl_minutes: int = 15

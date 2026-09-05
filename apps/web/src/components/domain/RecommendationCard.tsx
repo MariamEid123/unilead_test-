@@ -15,7 +15,7 @@ export default function RecommendationCard({ recommendation }: { recommendation:
         <h3 className="recommendation-card__title">{recommendation.title}</h3>
         <p className="recommendation-card__reason muted">{recommendation.reason}</p>
       </div>
-      <Button variant="accent" onClick={() => navigate(recommendation.href)}>
+      <Button onClick={() => navigate(recommendation.href)}>
         Start Now
       </Button>
     </Card>

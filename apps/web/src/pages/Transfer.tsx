@@ -166,7 +166,7 @@ export default function Transfer() {
           {phase === 'evaluated' && evaluation && (
             <Card padding="lg" className="transfer__result-card">
               <div className="transfer__result-header">
-                <Badge tone={evaluation.passed ? 'success' : 'danger'}>
+                <Badge tone={evaluation.passed ? 'accent' : 'danger'}>
                   {evaluation.passed ? 'TRANSFER DEMONSTRATED' : 'TRANSFER NOT YET'}
                 </Badge>
                 <span className="muted">
@@ -181,7 +181,7 @@ export default function Transfer() {
                     Try Different Plant
                   </Button>
                 )}
-                <Button onClick={() => navigate('/progress/competency-profile')}>
+                <Button variant={evaluation.passed ? 'accent' : 'primary'} onClick={() => navigate('/progress/competency-profile')}>
                   View Competency Profile
                 </Button>
               </div>

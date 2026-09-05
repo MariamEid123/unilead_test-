@@ -8,11 +8,11 @@ import { useApp } from '../state/AppContext';
 import type { AsyncState, Competency, Student } from '../types';
 import './CompetencyProfile.css';
 
-const TONE_BY_STATUS: Record<Competency['status'], 'primary' | 'warning' | 'danger' | 'success'> = {
+const TONE_BY_STATUS: Record<Competency['status'], 'primary' | 'warning' | 'danger' | 'accent'> = {
   NOT_STARTED: 'primary',
   NEEDS_PRACTICE: 'danger',
   DEVELOPING: 'warning',
-  DEMONSTRATED: 'success',
+  DEMONSTRATED: 'accent',
 };
 
 export default function CompetencyProfile() {

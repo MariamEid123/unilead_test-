@@ -35,7 +35,7 @@ def get_scenario(
     from ai_education.transfer.scenarios import get_transfer_scenario
 
     gateway = ai_education_bridge.get_gateway(http_request, student_id)
-    mec271_id = ai_education_bridge.compass_id_to_mec271(competency_id)
+    mec271_id = ai_education_bridge.UniLead_id_to_mec271(competency_id)
     manager = gateway.student_manager
 
     # Validate competency exists.
@@ -90,7 +90,7 @@ def evaluate_response(
     from ai_education.transfer.scenarios import get_transfer_scenario
 
     gateway = ai_education_bridge.get_gateway(http_request, student_id)
-    mec271_id = ai_education_bridge.compass_id_to_mec271(competency_id)
+    mec271_id = ai_education_bridge.UniLead_id_to_mec271(competency_id)
 
     scenario = get_transfer_scenario(request_data.scenario_id)
     if scenario is None:
@@ -107,7 +107,7 @@ def evaluate_response(
         scenario=scenario,
     )
 
-    # Promote the manager's record so sync_compass_state_from_manager
+    # Promote the manager's record so sync_UniLead_state_from_manager
     # reflects the outcome (same progression as a passing simulation run:
     # first success → DEVELOPING, second → DEMONSTRATED).
     from ai_education.domain.enums import CompetencyState
@@ -119,8 +119,8 @@ def evaluate_response(
         elif record.state is CompetencyState.DEVELOPING:
             record.state = CompetencyState.DEMONSTRATED
 
-    # Sync state back to Compass so /api/competencies reflects the transfer outcome
-    ai_education_bridge.sync_compass_state_from_manager(gateway)
+    # Sync state back to UniLead so /api/competencies reflects the transfer outcome
+    ai_education_bridge.sync_UniLead_state_from_manager(gateway)
 
     # Record an evidence timeline event for the transfer evaluation.
     from . import student_state

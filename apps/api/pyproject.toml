@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "unilead-api"
 version = "0.1.0"
-description = "Unified FastAPI gateway for the Unilead platform (Compass MVP + AI Education)."
+description = "Unified FastAPI gateway for the Unilead platform (UniLead MVP + AI Education)."
 requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.115",

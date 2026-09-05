@@ -63,6 +63,9 @@ class User(Base):
     email_verification_code_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
     email_verification_expires_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     email_verification_sent_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    password_reset_code_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    password_reset_expires_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    password_reset_sent_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, nullable=False)
 

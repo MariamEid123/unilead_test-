@@ -5,6 +5,7 @@ import Card from '../components/ui/Card';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import { signUp } from '../data/mockApi';
+import { ApiError } from '../data/apiClient';
 import './SignUp.css';
 
 export default function SignUp() {
@@ -15,6 +16,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ name?: string; username?: string; email?: string; password?: string; form?: string }>({});
   const [loading, setLoading] = useState(false);
+  const [duplicateAccount, setDuplicateAccount] = useState(false);
 
   // Mirror the backend rule in schemas/auth.py (UNIVERSITY_EMAIL_DOMAIN_RE):
   // the domain must end with .edu, .edu.<cc>, or .ac.<cc> and nothing else.
@@ -55,6 +57,7 @@ export default function SignUp() {
     if (!validate()) return;
     setLoading(true);
     setErrors({});
+    setDuplicateAccount(false);
     try {
       // 1. Sign up via the real backend endpoint — this returns a
       // "verification required" result (no JWT yet); a 6-digit code is
@@ -70,6 +73,10 @@ export default function SignUp() {
       // code is entered there.
       navigate(`/verify-email?email=${encodeURIComponent(result.email)}`);
     } catch (err) {
+      if (err instanceof ApiError && err.status === 409) {
+        setDuplicateAccount(true);
+        return;
+      }
       setErrors({
         form: err instanceof Error ? err.message : 'Could not create account. Please try again.',
       });
@@ -82,7 +89,7 @@ export default function SignUp() {
     <div className="signup">
       <div className="signup__panel">
         <div className="signup__brand">
-          <span className="signup__brand-mark">◆</span> Compass
+          <img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> UniLead
         </div>
         <h2 className="signup__headline">Build real, demonstrated skill.</h2>
         <p className="signup__subtext muted">
@@ -97,6 +104,11 @@ export default function SignUp() {
           <p className="muted signup__lede">Start your learning journey in under a minute.</p>
 
           {errors.form && <div className="signup__error">{errors.form}</div>}
+          {duplicateAccount && (
+            <div className="signup__error">
+              An account with this email already exists. <Link to="/login">Log in instead →</Link>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="signup__form" noValidate>
             <Input

@@ -4,11 +4,11 @@ import { StatusBadge } from '../ui/Badge';
 import type { Competency } from '../../types';
 import './CompetencyCard.css';
 
-const TONE_BY_STATUS: Record<Competency['status'], 'primary' | 'warning' | 'danger' | 'success'> = {
+const TONE_BY_STATUS: Record<Competency['status'], 'primary' | 'warning' | 'danger' | 'accent'> = {
   NOT_STARTED: 'primary',
   NEEDS_PRACTICE: 'danger',
   DEVELOPING: 'warning',
-  DEMONSTRATED: 'success',
+  DEMONSTRATED: 'accent',
 };
 
 export default function CompetencyCard({ competency }: { competency: Competency }) {

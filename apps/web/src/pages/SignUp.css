@@ -2,16 +2,31 @@
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  background: var(--color-bg);
 }
 
 .signup__panel {
-  background: linear-gradient(160deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: #fff;
+  background: var(--color-primary-dark);
+  color: var(--color-surface);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.signup__panel::after {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -120px;
+  bottom: -120px;
+  border: 1px solid rgba(34, 193, 220, 0.28);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(34, 193, 220, 0.06), 0 0 0 48px rgba(34, 193, 220, 0.04);
 }
 
 .signup__brand {
@@ -23,7 +38,10 @@
 }
 
 .signup__brand-mark {
-  color: var(--color-accent);
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
 .signup__headline {
@@ -34,7 +52,7 @@
 }
 
 .signup__subtext {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.78);
   max-width: 380px;
   font-size: var(--fs-md);
 }
@@ -44,11 +62,13 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-6);
+  background: var(--color-bg);
 }
 
 .signup__card {
   width: 100%;
   max-width: 400px;
+  box-shadow: var(--shadow-md);
 }
 
 .signup__title {
@@ -69,8 +89,8 @@
 }
 
 .signup__error {
-  background: #fee2e2;
-  color: #991b1b;
+  background: var(--color-danger-light);
+  color: var(--color-danger);
   padding: 10px 14px;
   border-radius: var(--radius-md);
   margin-bottom: var(--space-3);
@@ -78,8 +98,8 @@
 }
 
 .signup__success {
-  background: #dcfce7;
-  color: #166534;
+  background: var(--color-success-light);
+  color: var(--color-success);
   padding: 10px 14px;
   border-radius: var(--radius-md);
   margin-bottom: var(--space-3);
@@ -102,7 +122,7 @@
 }
 
 .signup__link-button:disabled {
-  color: var(--color-text-muted, #6b7280);
+  color: var(--color-text-muted);
   cursor: default;
   text-decoration: none;
 }
@@ -141,7 +161,9 @@
     grid-template-columns: 1fr;
   }
   .signup__panel {
-    padding: var(--space-6);
+    min-height: 260px;
+    padding: var(--space-6) var(--space-5);
+    justify-content: flex-end;
   }
   .signup__headline {
     font-size: var(--fs-2xl);

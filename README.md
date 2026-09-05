@@ -8,7 +8,7 @@ It is the merge of three previously separate repositories into a single monorepo
 2. **Robotics** — a near-identical copy of AI Education (kept for reference; not active).
 3. **Platform** — MEC271 Automatic Control learning platform (React/TS frontend + FastAPI backend).
 
-The UI preserved is the **Platform UI** (`edu-platform`, React + TypeScript + Vite + Tailwind). All three backends (Platform's Compass API + AI Education's gateway) are merged into a single FastAPI app under `apps/api`.
+The UI preserved is the **Platform UI** (`edu-platform`, React + TypeScript + Vite + Tailwind). All three backends (Platform's UniLead API + AI Education's gateway) are merged into a single FastAPI app under `apps/api`.
 
 ---
 
@@ -19,11 +19,11 @@ unilead/
 ├── apps/
 │   ├── api/                       # Unified FastAPI gateway
 │   │   ├── app/
-│   │   │   ├── main.py            # Mounts Compass routes + AI Education routes
+│   │   │   ├── main.py            # Mounts UniLead routes + AI Education routes
 │   │   │   ├── config.py          # Merged Settings (CORS + LLM)
-│   │   │   ├── routers/           # Compass MVP routes (competencies, progress, ...)
-│   │   │   ├── schemas/           # Pydantic schemas (Compass MVP)
-│   │   │   └── services/          # Compass MVP services (mock data, student state, ...)
+│   │   │   ├── routers/           # UniLead MVP routes (competencies, progress, ...)
+│   │   │   ├── schemas/           # Pydantic schemas (UniLead MVP)
+│   │   │   └── services/          # UniLead MVP services (mock data, student state, ...)
 │   │   ├── pyproject.toml
 │   │   ├── requirements.txt
 │   │   ├── .env.example
@@ -100,7 +100,7 @@ Interactive docs at <http://localhost:8000/docs>.
 | `GET` | `/api/competencies` | List the 5 MEC271 competencies |
 | `GET` | `/api/progress` | Overall + per-competency progress |
 | `GET` | `/api/diagnostic/questions` | Diagnostic quiz items |
-| `POST` | `/api/coach` | (Compass MVP) coach endpoint |
+| `POST` | `/api/coach` | (UniLead MVP) coach endpoint |
 | `POST` | `/api/simulation` | Run a PID simulation |
 | `POST` | `/api/ai-education/coach/chat` | (AI Education) one coach turn |
 | `POST` | `/api/ai-education/evidence/telemetry` | Submit a telemetry run |
@@ -244,7 +244,7 @@ text generation layer swaps out.
                               ┌─────────────────────────────────┐
                               │     apps/api (FastAPI app)       │
                               │                                 │
-   React frontend ──HTTP──▶   │  Compass MVP routes (/api/*)    │
+   React frontend ──HTTP──▶   │  UniLead MVP routes (/api/*)    │
                               │   • /api/competencies            │
                               │   • /api/progress                │
                               │   • /api/coach, /api/diagnostic  │

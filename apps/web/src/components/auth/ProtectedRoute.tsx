@@ -10,7 +10,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const location = useLocation();
 
   if (!session) {
-    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+    return <Navigate to="/login" state={{ from: `${location.pathname}${location.search}${location.hash}` }} replace />;
   }
 
   return <>{children}</>;
@@ -28,6 +28,16 @@ export function InstructorRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (session.role !== 'instructor') {
+    return <Navigate to="/home" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+export function PublicOnlyRoute({ children }: { children: React.ReactNode }) {
+  const { session } = useApp();
+
+  if (session) {
     return <Navigate to="/home" replace />;
   }
 

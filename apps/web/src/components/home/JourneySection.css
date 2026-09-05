@@ -1,5 +1,5 @@
 .journey {
-  background: #ffffff;
+  background: var(--color-surface);
   scroll-margin-top: 80px;
 }
 
@@ -61,11 +61,15 @@
   justify-content: center;
   border-radius: 50%;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-surface);
   font-weight: 700;
   font-size: var(--fs-sm);
   position: relative;
   z-index: 1;
+}
+
+.journey__marker--final {
+  background: var(--color-accent);
 }
 
 .journey__step-label {

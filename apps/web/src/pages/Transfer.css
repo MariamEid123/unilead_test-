@@ -44,7 +44,7 @@
   padding: 8px 12px;
   border-radius: var(--radius-md);
   border: 1.5px solid var(--color-border);
-  background: #fff;
+  background: var(--color-surface);
   font-size: var(--fs-sm);
   font-family: inherit;
   cursor: pointer;

@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
-import HeroIllustration from './HeroIllustration';
 import './Hero.css';
 
 interface HeroProps {
@@ -17,11 +16,10 @@ export default function Hero({ primaryHref, onExploreClick }: HeroProps) {
         <div className="hero__copy">
           <h1 className="hero__headline">Learn. Practice. Prove Your Skills.</h1>
           <p className="hero__subtext">
-            An AI-powered learning platform that helps you understand concepts, practice real
-            problems, and build measurable competencies.
+            Understand it. Practice it. Prove it.
           </p>
           <div className="hero__actions">
-            <Button size="lg" onClick={() => navigate(primaryHref)}>
+            <Button variant="accent" size="lg" onClick={() => navigate(primaryHref)}>
               Start Your Learning Journey →
             </Button>
             <Button variant="ghost" size="lg" onClick={onExploreClick}>
@@ -31,7 +29,11 @@ export default function Hero({ primaryHref, onExploreClick }: HeroProps) {
         </div>
 
         <div className="hero__art">
-          <HeroIllustration />
+          <img
+            className="hero__logo-image"
+            src="/unilead-logo.svg"
+            alt="UniLead — Learn, Practice, Lead"
+          />
         </div>
       </div>
     </section>

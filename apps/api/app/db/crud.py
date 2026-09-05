@@ -93,6 +93,29 @@ def mark_user_verified(db: Session, *, user: models.User) -> None:
     db.flush()
 
 
+def set_password_reset_code(
+    db: Session,
+    *,
+    user: models.User,
+    code_hash: str,
+    expires_at: datetime,
+    sent_at: datetime,
+) -> None:
+    """Store a fresh password reset code for a user."""
+    user.password_reset_code_hash = code_hash
+    user.password_reset_expires_at = expires_at
+    user.password_reset_sent_at = sent_at
+    db.flush()
+
+
+def clear_password_reset_code(db: Session, *, user: models.User) -> None:
+    """Invalidate a password reset code after use or explicit cleanup."""
+    user.password_reset_code_hash = None
+    user.password_reset_expires_at = None
+    user.password_reset_sent_at = None
+    db.flush()
+
+
 # ---- Student --------------------------------------------------------------
 
 

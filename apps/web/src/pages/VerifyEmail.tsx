@@ -102,12 +102,12 @@ export default function VerifyEmail() {
     <div className="signup">
       <div className="signup__panel">
         <div className="signup__brand">
-          <span className="signup__brand-mark">◆</span> Compass
+          <img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> UniLead
         </div>
         <h2 className="signup__headline">One more step.</h2>
         <p className="signup__subtext muted">
           We emailed a 6-digit verification code to your university address. Enter it below to
-          activate your account — it's how we keep Compass open to students only.
+          activate your account — it's how we keep UniLead open to students only.
         </p>
       </div>
 
@@ -163,6 +163,10 @@ export default function VerifyEmail() {
 
           <p className="muted signup__alt">
             New here? <Link to="/signup">Create an account</Link>
+          </p>
+
+          <p className="muted signup__alt">
+            <Link to="/login">Skip verification and go to sign in</Link>
           </p>
         </Card>
       </div>

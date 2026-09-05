@@ -1,5 +1,5 @@
 .home-footer {
-  background: #ffffff;
+  background: var(--color-surface);
   border-top: 1px solid var(--color-border);
 }
 
@@ -15,8 +15,16 @@
 }
 
 .home-footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   font-weight: 700;
   color: var(--color-text);
+}
+
+.home-footer__brand img {
+  width: 24px;
+  height: 24px;
 }
 
 .home-footer__meta {

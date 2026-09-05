@@ -23,20 +23,23 @@ export function clearAuthToken(): void {
   localStorage.removeItem(TOKEN_KEY);
 }
 
-function buildHeaders(extra?: HeadersInit): HeadersInit {
+function buildHeaders(extra?: HeadersInit, includeAuth = true): HeadersInit {
   const headers: Record<string, string> = {
     Accept: 'application/json',
     ...((extra as Record<string, string>) ?? {}),
   };
-  const token = getAuthToken();
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+  if (includeAuth) {
+    const token = getAuthToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
   }
   return headers;
 }
 
 function redirectToLogin(): void {
   clearAuthToken();
+  sessionStorage.setItem('unilead_auth_message', 'Your session expired — please log in again.');
   // Already on the login page? Just surface the error in-place — no reload.
   if (window.location.pathname === '/login') return;
   window.location.href = '/login';
@@ -56,8 +59,8 @@ export class ApiError extends Error {
   }
 }
 
-async function handleResponse<T>(res: Response): Promise<T> {
-  if (res.status === 401) {
+async function handleResponse<T>(res: Response, redirectOnUnauthorized = true): Promise<T> {
+  if (res.status === 401 && redirectOnUnauthorized) {
     redirectToLogin();
     throw new ApiError(401, 'Session expired. Please log in again.');
   }
@@ -105,13 +108,13 @@ export async function apiPost<T>(path: string, body: unknown): Promise<T> {
   try {
     res = await fetch(`${API_BASE_URL}${path}`, {
       method: 'POST',
-      headers: buildHeaders({ 'Content-Type': 'application/json' }),
+      headers: buildHeaders({ 'Content-Type': 'application/json' }, !path.startsWith('/auth/')),
       body: JSON.stringify(body),
     });
   } catch {
     throw new Error('Could not reach the server. Is the backend running?');
   }
-  return handleResponse<T>(res);
+  return handleResponse<T>(res, path !== '/auth/login');
 }
 
 export async function apiPut<T>(path: string, body: unknown): Promise<T> {

@@ -7,6 +7,7 @@ import { LoadingState, ErrorState, EmptyState } from '../components/ui/StateView
 import { getMyEvidenceTimeline } from '../data/mockApi';
 import type { EvidenceEvent } from '../types';
 import './InstructorStudentDetail.css';
+import './EvidenceTimeline.css';
 
 const EVENT_TYPE_LABELS: Record<string, string> = {
   diagnostic_submitted: 'Diagnostic submitted',
@@ -99,9 +100,7 @@ export default function EvidenceTimeline() {
       <div className="evidence-timeline-page__eyebrow">Apply & Review</div>
       <h1 className="evidence-timeline-page__title">Evidence Timeline</h1>
       <p className="muted evidence-timeline-page__subtitle">
-        A chronological feed of every event that produced evidence for your profile. The
-        simulation, transfer, diagnostic, and coach engines all write here — the timeline never
-        invents events.
+        Every event that builds your competency profile, in one place.
       </p>
 
       {phase === 'loading' && <LoadingState message="Loading your evidence timeline…" />}

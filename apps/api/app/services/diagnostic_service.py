@@ -84,12 +84,12 @@ def submit_diagnostic(
     # If we have a gateway, run the AI Education DiagnosticEngine so its
     # student model reflects the diagnostic too. This is best-effort: if
     # the gateway isn't available (e.g. in unit tests), we still return
-    # the Compass-style results derived above.
+    # the UniLead-style results derived above.
     if http_request is not None:
         try:
             _run_ai_education_diagnostic(answers, http_request, student_id)
-            # Sync the (possibly updated) competency state back to Compass.
-            ai_education_bridge.sync_compass_state_from_manager(
+            # Sync the (possibly updated) competency state back to UniLead.
+            ai_education_bridge.sync_UniLead_state_from_manager(
                 ai_education_bridge.get_gateway(http_request, student_id)
             )
         except Exception:
@@ -189,7 +189,7 @@ def _run_ai_education_diagnostic(
     responses: list[DiagnosticResponse] = []
     for q in DIAGNOSTIC_QUESTIONS:
         option_ids = [o["id"] for o in q["options"]]
-        mec271_id = ai_education_bridge.compass_id_to_mec271(q["competency_id"])
+        mec271_id = ai_education_bridge.UniLead_id_to_mec271(q["competency_id"])
         correct_index = option_ids.index(CORRECT_ANSWERS[q["id"]])
         items.append(
             DiagnosticItem(

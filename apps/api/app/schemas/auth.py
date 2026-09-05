@@ -20,6 +20,22 @@ UNIVERSITY_EMAIL_DOMAIN_RE = re.compile(
 )
 
 
+def validate_password_policy(password: str) -> str:
+    """Apply the password policy shared by signup and password reset."""
+    errors = []
+    if not any(c.isupper() for c in password):
+        errors.append("at least one uppercase letter")
+    if not any(c.islower() for c in password):
+        errors.append("at least one lowercase letter")
+    if not any(c.isdigit() for c in password):
+        errors.append("at least one digit")
+    if not any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in password):
+        errors.append("at least one special character")
+    if errors:
+        raise ValueError(f"Password must contain {', '.join(errors)}.")
+    return password
+
+
 class SignUpRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=255)
     username: str = Field(..., min_length=3, max_length=50, pattern=r"^[a-zA-Z0-9_]+$")
@@ -49,18 +65,7 @@ class SignUpRequest(BaseModel):
 
     @model_validator(mode="after")
     def validate_password_strength(self) -> SignUpRequest:
-        pw = self.password
-        errors = []
-        if not any(c.isupper() for c in pw):
-            errors.append("at least one uppercase letter")
-        if not any(c.islower() for c in pw):
-            errors.append("at least one lowercase letter")
-        if not any(c.isdigit() for c in pw):
-            errors.append("at least one digit")
-        if not any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in pw):
-            errors.append("at least one special character")
-        if errors:
-            raise ValueError(f"Password must contain {', '.join(errors)}.")
+        validate_password_policy(self.password)
         return self
 
 
@@ -76,6 +81,21 @@ class VerifyEmailRequest(BaseModel):
 
 class ResendVerificationRequest(BaseModel):
     email: EmailStr
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    code: str = Field(..., min_length=4, max_length=10)
+    new_password: str = Field(..., min_length=8, max_length=72)
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_new_password(cls, value: str) -> str:
+        return validate_password_policy(value)
 
 
 class SignUpResponse(BaseModel):

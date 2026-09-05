@@ -22,6 +22,7 @@
   color: var(--color-text);
   font-family: inherit;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  min-height: 48px;
 }
 
 .field__input:focus,
@@ -31,8 +32,14 @@
   box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
+.field__input:hover:not(:focus),
+.field__select:hover:not(:focus) {
+  border-color: var(--color-primary-light);
+}
+
 .field__input--error {
   border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px var(--color-danger-light);
 }
 
 .field__error {

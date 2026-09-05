@@ -1,0 +1,206 @@
+[33ma6fbc05[m add files after fix issues
+ README.md                                          |     76 [32m+[m
+ backend/.env                                       |      6 [32m+[m
+ backend/.env.example                               |     13 [32m+[m
+ .../__pycache__/typing_extensions.cpython-312.pyc  |    Bin [31m0[m -> [32m166541[m bytes
+ .../_cffi_backend.cp312-win_amd64.pyd              |    Bin [31m0[m -> [32m181248[m bytes
+ backend/.venv/Lib/site-packages/_yaml/__init__.py  |     33 [32m+[m
+ .../_yaml/__pycache__/__init__.cpython-312.pyc     |    Bin [31m0[m -> [32m864[m bytes
+ .../annotated_types-0.8.0.dist-info/INSTALLER      |      1 [32m+[m
+ .../annotated_types-0.8.0.dist-info/METADATA       |    295 [32m+[m
+ .../annotated_types-0.8.0.dist-info/RECORD         |     10 [32m+[m
+ .../annotated_types-0.8.0.dist-info/WHEEL          |      4 [32m+[m
+ .../licenses/LICENSE                               |     21 [32m+[m
+ .../Lib/site-packages/annotated_types/__init__.py  |    416 [32m+[m
+ .../__pycache__/__init__.cpython-312.pyc           |    Bin [31m0[m -> [32m17793[m bytes
+ .../__pycache__/test_cases.cpython-312.pyc         |    Bin [31m0[m -> [32m13067[m bytes
+ .../Lib/site-packages/annotated_types/py.typed     |      0
+ .../site-packages/annotated_types/test_cases.py    |    146 [32m+[m
+ .../site-packages/anyio-4.14.2.dist-info/INSTALLER |      1 [32m+[m
+ .../site-packages/anyio-4.14.2.dist-info/METADATA  |    107 [32m+[m
+ .../site-packages/anyio-4.14.2.dist-info/RECORD    |     96 [32m+[m
+ .../Lib/site-packages/anyio-4.14.2.dist-info/WHEEL |      5 [32m+[m
+ .../anyio-4.14.2.dist-info/entry_points.txt        |      2 [32m+[m
+ .../anyio-4.14.2.dist-info/licenses/LICENSE        |     20 [32m+[m
+ .../anyio-4.14.2.dist-info/scm_file_list.json      |    119 [32m+[m
+ .../anyio-4.14.2.dist-info/scm_version.json        |      8 [32m+[m
+ .../anyio-4.14.2.dist-info/top_level.txt           |      1 [32m+[m
+ backend/.venv/Lib/site-packages/anyio/__init__.py  |    115 [32m+[m
+ .../anyio/__pycache__/__init__.cpython-312.pyc     |    Bin [31m0[m -> [32m4770[m bytes
+ .../anyio/__pycache__/from_thread.cpython-312.pyc  |    Bin [31m0[m -> [32m25944[m bytes
+ .../anyio/__pycache__/functools.cpython-312.pyc    |    Bin [31m0[m -> [32m16257[m bytes
+ .../anyio/__pycache__/itertools.cpython-312.pyc    |    Bin [31m0[m -> [32m24225[m bytes
+ .../anyio/__pycache__/lowlevel.cpython-312.pyc     |    Bin [31m0[m -> [32m9088[m bytes
+ .../__pycache__/pytest_plugin.cpython-312.pyc      |    Bin [31m0[m -> [32m17042[m bytes
+ .../__pycache__/to_interpreter.cpython-312.pyc     |    Bin [31m0[m -> [32m10329[m bytes
+ .../anyio/__pycache__/to_process.cpython-312.pyc   |    Bin [31m0[m -> [32m12081[m bytes
+ .../anyio/__pycache__/to_thread.cpython-312.pyc    |    Bin [31m0[m -> [32m3256[m bytes
+ .../Lib/site-packages/anyio/_backends/__init__.py  |      0
+ .../_backends/__pycache__/__init__.cpython-312.pyc |    Bin [31m0[m -> [32m192[m bytes
+ .../_backends/__pycache__/_asyncio.cpython-312.pyc |    Bin [31m0[m -> [32m143300[m bytes
+ .../_backends/__pycache__/_trio.cpython-312.pyc    |    Bin [31m0[m -> [32m76750[m bytes
+ .../Lib/site-packages/anyio/_backends/_asyncio.py  |   3136 [32m+[m
+ .../Lib/site-packages/anyio/_backends/_trio.py     |   1468 [32m+[m
+ .../Lib/site-packages/anyio/_core/__init__.py      |      0
+ .../_core/__pycache__/__init__.cpython-312.pyc     |    Bin [31m0[m -> [32m188[m bytes
+ .../_asyncio_selector_thread.cpython-312.pyc       |    Bin [31m0[m -> [32m8403[m bytes
+ .../__pycache__/_contextmanagers.cpython-312.pyc   |    Bin [31m0[m -> [32m8998[m bytes
+ .../_core/__pycache__/_eventloop.cpython-312.pyc   |    Bin [31m0[m -> [32m8363[m bytes
+ .../_core/__pycache__/_exceptions.cpython-312.pyc  |    Bin [31m0[m -> [32m8268[m bytes
+ .../_core/__pycache__/_fileio.cpython-312.pyc      |    Bin [31m0[m -> [32m49482[m bytes
+ .../_core/__pycache__/_resources.cpython-312.pyc   |    Bin [31m0[m -> [32m930[m bytes
+ .../_core/__pycache__/_signals.cpython-312.pyc     |    Bin [31m0[m -> [32m1384[m bytes
+ .../_core/__pycache__/_sockets.cpython-312.pyc     |    Bin [31m0[m -> [32m41064[m bytes
+ .../_core/__pycache__/_streams.cpython-312.pyc     |    Bin [31m0[m -> [32m2337[m bytes
+ .../__pycache__/_subprocesses.cpython-312.pyc      |    Bin [31m0[m -> [32m9468[m bytes
+ .../__pycache__/_synchronization.cpython-312.pyc   |    Bin [31m0[m -> [32m33302[m bytes
+ .../anyio/_core/__pycache__/_tasks.cpython-312.pyc |    Bin [31m0[m -> [32m17981[m bytes
+ .../_core/__pycache__/_tempfile.cpython-312.pyc    |    Bin [31m0[m -> [32m28040[m bytes
+ .../_core/__pycache__/_testing.cpython-312.pyc     |    Bin [31m0[m -> [32m3790[m bytes
+ .../_core/__pycache__/_typedattr.cpython-312.pyc   |    Bin [31m0[m -> [32m3833[m bytes
+ .../anyio/_core/_asyncio_selector_thread.py        |    167 [32m+[m
+ .../site-packages/anyio/_core/_contextmanagers.py  |    200 [32m+[m
+ .../Lib/site-packages/anyio/_core/_eventloop.py    |    240 [32m+[m
+ .../Lib/site-packages/anyio/_core/_exceptions.py   |    177 [32m+[m
+ .../.venv/Lib/site-packages/anyio/_core/_fileio.py |    960 [32m+[m
+ .../Lib/site-packages/anyio/_core/_resources.py    |     18 [32m+[m
+ .../Lib/site-packages/anyio/_core/_signals.py      |     29 [32m+[m
+ .../Lib/site-packages/anyio/_core/_sockets.py      |   1011 [32m+[m
+ .../Lib/site-packages/anyio/_core/_streams.py      |     52 [32m+[m
+ .../Lib/site-packages/anyio/_core/_subprocesses.py |    196 [32m+[m
+ .../site-packages/anyio/_core/_synchronization.py  |    772 [32m+[m
+ .../.venv/Lib/site-packages/anyio/_core/_tasks.py  |    412 [32m+[m
+ .../Lib/site-packages/anyio/_core/_tempfile.py     |    613 [32m+[m
+ .../Lib/site-packages/anyio/_core/_testing.py      |     82 [32m+[m
+ .../Lib/site-packages/anyio/_core/_typedattr.py    |     81 [32m+[m
+ .../.venv/Lib/site-packages/anyio/abc/__init__.py  |     58 [32m+[m
+ .../anyio/abc/__pycache__/__init__.cpython-312.pyc |    Bin [31m0[m -> [32m2363[m bytes
+ .../abc/__pycache__/_eventloop.cpython-312.pyc     |    Bin [31m0[m -> [32m16653[m bytes
+ .../abc/__pycache__/_resources.cpython-312.pyc     |    Bin [31m0[m -> [32m1635[m bytes
+ .../anyio/abc/__pycache__/_sockets.cpython-312.pyc |    Bin [31m0[m -> [32m18266[m bytes
+ .../anyio/abc/__pycache__/_streams.cpython-312.pyc |    Bin [31m0[m -> [32m9771[m bytes
+ .../abc/__pycache__/_subprocesses.cpython-312.pyc  |    Bin [31m0[m -> [32m3243[m bytes
+ .../anyio/abc/__pycache__/_tasks.cpython-312.pyc   |    Bin [31m0[m -> [32m8931[m bytes
+ .../anyio/abc/__pycache__/_testing.cpython-312.pyc |    Bin [31m0[m -> [32m3142[m bytes
+ .../Lib/site-packages/anyio/abc/_eventloop.py      |    410 [32m+[m
+ .../Lib/site-packages/anyio/abc/_resources.py      |     33 [32m+[m
+ .../.venv/Lib/site-packages/anyio/abc/_sockets.py  |    399 [32m+[m
+ .../.venv/Lib/site-packages/anyio/abc/_streams.py  |    235 [32m+[m
+ .../Lib/site-packages/anyio/abc/_subprocesses.py   |     79 [32m+[m
+ .../.venv/Lib/site-packages/anyio/abc/_tasks.py    |    209 [32m+[m
+ .../.venv/Lib/site-packages/anyio/abc/_testing.py  |     73 [32m+[m
+ .../.venv/Lib/site-packages/anyio/from_thread.py   |    582 [32m+[m
+ backend/.venv/Lib/site-packages/anyio/functools.py |    400 [32m+[m
+ backend/.venv/Lib/site-packages/anyio/itertools.py |    626 [32m+[m
+ backend/.venv/Lib/site-packages/anyio/lowlevel.py  |    228 [32m+[m
+ backend/.venv/Lib/site-packages/anyio/py.typed     |      0
+ .../.venv/Lib/site-packages/anyio/pytest_plugin.py |    375 [32m+[m
+ .../Lib/site-packages/anyio/streams/__init__.py    |      0
+ .../streams/__pycache__/__init__.cpython-312.pyc   |    Bin [31m0[m -> [32m190[m bytes
+ .../streams/__pycache__/buffered.cpython-312.pyc   |    Bin [31m0[m -> [32m9567[m bytes
+ .../anyio/streams/__pycache__/file.cpython-312.pyc |    Bin [31m0[m -> [32m7556[m bytes
+ .../streams/__pycache__/memory.cpython-312.pyc     |    Bin [31m0[m -> [32m15045[m bytes
+ .../streams/__pycache__/stapled.cpython-312.pyc    |    Bin [31m0[m -> [32m7651[m bytes
+ .../anyio/streams/__pycache__/text.cpython-312.pyc |    Bin [31m0[m -> [32m9336[m bytes
+ .../anyio/streams/__pycache__/tls.cpython-312.pyc  |    Bin [31m0[m -> [32m20370[m bytes
+ .../Lib/site-packages/anyio/streams/buffered.py    |    201 [32m+[m
+ .../.venv/Lib/site-packages/anyio/streams/file.py  |    157 [32m+[m
+ .../Lib/site-packages/anyio/streams/memory.py      |    326 [32m+[m
+ .../Lib/site-packages/anyio/streams/stapled.py     |    150 [32m+[m
+ .../.venv/Lib/site-packages/anyio/streams/text.py  |    176 [32m+[m
+ .../.venv/Lib/site-packages/anyio/streams/tls.py   |    436 [32m+[m
+ .../Lib/site-packages/anyio/to_interpreter.py      |    246 [32m+[m
+ .../.venv/Lib/site-packages/anyio/to_process.py    |    269 [32m+[m
+ backend/.venv/Lib/site-packages/anyio/to_thread.py |     80 [32m+[m
+ .../certifi-2026.7.22.dist-info/INSTALLER          |      1 [32m+[m
+ .../certifi-2026.7.22.dist-info/METADATA           |     78 [32m+[m
+ .../certifi-2026.7.22.dist-info/RECORD             |     18 [32m+[m
+ .../certifi-2026.7.22.dist-info/WHEEL              |      5 [32m+[m
+ .../certifi-2026.7.22.dist-info/licenses/LICENSE   |     20 [32m+[m
+ .../certifi-2026.7.22.dist-info/top_level.txt      |      1 [32m+[m
+ .../.venv/Lib/site-packages/certifi/__init__.py    |      4 [32m+[m
+ .../.venv/Lib/site-packages/certifi/__main__.py    |     12 [32m+[m
+ .../certifi/__pycache__/__init__.cpython-312.pyc   |    Bin [31m0[m -> [32m311[m bytes
+ .../certifi/__pycache__/__main__.cpython-312.pyc   |    Bin [31m0[m -> [32m626[m bytes
+ .../certifi/__pycache__/core.cpython-312.pyc       |    Bin [31m0[m -> [32m2058[m bytes
+ backend/.venv/Lib/site-packages/certifi/cacert.pem |   3959 [32m+[m
+ backend/.venv/Lib/site-packages/certifi/core.py    |     83 [32m+[m
+ backend/.venv/Lib/site-packages/certifi/py.typed   |      0
+ .../Lib/site-packages/certifi/tests/__init__.py    |      0
+ .../tests/__pycache__/__init__.cpython-312.pyc     |    Bin [31m0[m -> [32m190[m bytes
+ .../tests/__pycache__/test_certify.cpython-312.pyc |    Bin [31m0[m -> [32m1525[m bytes
+ .../site-packages/certifi/tests/test_certify.py    |     18 [32m+[m
+ .../site-packages/cffi-2.1.1.dist-info/INSTALLER   |      1 [32m+[m
+ .../site-packages/cffi-2.1.1.dist-info/METADATA    |     67 [32m+[m
+ .../Lib/site-packages/cffi-2.1.1.dist-info/RECORD  |     53 [32m+[m
+ .../Lib/site-packages/cffi-2.1.1.dist-info/WHEEL   |      5 [32m+[m
+ .../cffi-2.1.1.dist-info/entry_points.txt          |      5 [32m+[m
+ .../cffi-2.1.1.dist-info/licenses/LICENSE          |     23 [32m+[m
+ .../cffi-2.1.1.dist-info/top_level.txt             |      2 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/__init__.py   |     14 [32m+[m
+ .../cffi/__pycache__/__init__.cpython-312.pyc      |    Bin [31m0[m -> [32m549[m bytes
+ .../cffi/__pycache__/_cffi_gen_src.cpython-312.pyc |    Bin [31m0[m -> [32m8260[m bytes
+ .../__pycache__/_imp_emulation.cpython-312.pyc     |    Bin [31m0[m -> [32m3861[m bytes
+ .../_shimmed_dist_utils.cpython-312.pyc            |    Bin [31m0[m -> [32m2085[m bytes
+ .../cffi/__pycache__/api.cpython-312.pyc           |    Bin [31m0[m -> [32m49832[m bytes
+ .../__pycache__/backend_ctypes.cpython-312.pyc     |    Bin [31m0[m -> [32m63365[m bytes
+ .../cffi/__pycache__/cffi_opcode.cpython-312.pyc   |    Bin [31m0[m -> [32m6772[m bytes
+ .../cffi/__pycache__/commontypes.cpython-312.pyc   |    Bin [31m0[m -> [32m3074[m bytes
+ .../cffi/__pycache__/cparser.cpython-312.pyc       |    Bin [31m0[m -> [32m46746[m bytes
+ .../cffi/__pycache__/error.cpython-312.pyc         |    Bin [31m0[m -> [32m1891[m bytes
+ .../cffi/__pycache__/ffiplatform.cpython-312.pyc   |    Bin [31m0[m -> [32m5803[m bytes
+ .../cffi/__pycache__/gen_src.cpython-312.pyc       |    Bin [31m0[m -> [32m359[m bytes
+ .../cffi/__pycache__/lock.cpython-312.pyc          |    Bin [31m0[m -> [32m521[m bytes
+ .../cffi/__pycache__/model.cpython-312.pyc         |    Bin [31m0[m -> [32m30104[m bytes
+ .../cffi/__pycache__/pkgconfig.cpython-312.pyc     |    Bin [31m0[m -> [32m6361[m bytes
+ .../cffi/__pycache__/recompiler.cpython-312.pyc    |    Bin [31m0[m -> [32m80639[m bytes
+ .../__pycache__/setuptools_ext.cpython-312.pyc     |    Bin [31m0[m -> [32m11453[m bytes
+ .../cffi/__pycache__/vengine_cpy.cpython-312.pyc   |    Bin [31m0[m -> [32m49946[m bytes
+ .../cffi/__pycache__/vengine_gen.cpython-312.pyc   |    Bin [31m0[m -> [32m34091[m bytes
+ .../cffi/__pycache__/verifier.cpython-312.pyc      |    Bin [31m0[m -> [32m16107[m bytes
+ .../.venv/Lib/site-packages/cffi/_cffi_errors.h    |    135 [32m+[m
+ .../.venv/Lib/site-packages/cffi/_cffi_gen_src.py  |    216 [32m+[m
+ .../.venv/Lib/site-packages/cffi/_cffi_include.h   |    397 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/_embedding.h  |    512 [32m+[m
+ .../.venv/Lib/site-packages/cffi/_imp_emulation.py |     83 [32m+[m
+ .../Lib/site-packages/cffi/_shimmed_dist_utils.py  |     45 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/api.py        |    960 [32m+[m
+ .../.venv/Lib/site-packages/cffi/backend_ctypes.py |   1120 [32m+[m
+ .../.venv/Lib/site-packages/cffi/cffi_opcode.py    |    187 [32m+[m
+ .../.venv/Lib/site-packages/cffi/commontypes.py    |     82 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/cparser.py    |   1014 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/error.py      |     31 [32m+[m
+ .../.venv/Lib/site-packages/cffi/ffiplatform.py    |    113 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/gen_src.py    |      5 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/lock.py       |     30 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/model.py      |    617 [32m+[m
+ .../.venv/Lib/site-packages/cffi/parse_c_type.h    |    181 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/pkgconfig.py  |    121 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/recompiler.py |   1586 [32m+[m
+ .../.venv/Lib/site-packages/cffi/setuptools_ext.py |    231 [32m+[m
+ .../.venv/Lib/site-packages/cffi/vengine_cpy.py    |   1058 [32m+[m
+ .../.venv/Lib/site-packages/cffi/vengine_gen.py    |    679 [32m+[m
+ backend/.venv/Lib/site-packages/cffi/verifier.py   |    306 [32m+[m
+ .../charset_normalizer-3.5.1.dist-info/INSTALLER   |      1 [32m+[m
+ .../charset_normalizer-3.5.1.dist-info/METADATA    |    878 [32m+[m
+ .../charset_normalizer-3.5.1.dist-info/RECORD      |     35 [32m+[m
+ .../charset_normalizer-3.5.1.dist-info/WHEEL       |      5 [32m+[m
+ .../entry_points.txt                               |      2 [32m+[m
+ .../licenses/LICENSE                               |     21 [32m+[m
+ .../top_level.txt                                  |      1 [32m+[m
+ .../site-packages/charset_normalizer/__init__.py   |     48 [32m+[m
+ .../site-packages/charset_normalizer/__main__.py   |      6 [32m+[m
+ .../__pycache__/__init__.cpython-312.pyc           |    Bin [31m0[m -> [32m1769[m bytes
+ .../__pycache__/__main__.cpython-312.pyc           |    Bin [31m0[m -> [32m352[m bytes
+ .../__pycache__/api.cpython-312.pyc                |    Bin [31m0[m -> [32m21843[m bytes
+ .../__pycache__/cd.cpython-312.pyc                 |    Bin [31m0[m -> [32m14061[m bytes
+ .../__pycache__/constant.cpython-312.pyc           |    Bin [31m0[m -> [32m55113[m bytes
+ .../__pycache__/legacy.cpython-312.pyc             |    Bin [31m0[m -> [32m2968[m bytes
+ .../__pycache__/md.cpython-312.pyc                 |    Bin [31m0[m -> [32m33469[m bytes
+ .../__pycache__/models.cpython-312.pyc             |    Bin [31m0[m -> [32m17729[m bytes
+ .../__pycache__/utils.cpython-312.pyc              |    Bin [31m0[m -> [32m15182[m bytes
+ .../__pycache__/version.cpython-312.pyc            |    Bin [31m0[m -> [32m379[m bytes
+ .../Lib/site-packages/charset_normalizer/api.py    |    934 [32m+[m
+ .../charset_normalizer/cd.cp312-win_amd64.pyd      |    Bin [31m0[m -> [32m117248[m bytes
+ .../Lib/site-packages/charset_normalizer/cd.py     |    467 [32m+[m
+ .../charset_normalizer/cli/__init__.py            

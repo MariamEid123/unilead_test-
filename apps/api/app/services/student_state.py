@@ -1,6 +1,6 @@
 """Student state — DB-backed, per-student.
 
-All functions take ``student_id`` as a parameter now. The Compass routes
+All functions take ``student_id`` as a parameter now. The UniLead routes
 pass the current user's ``student_id`` (resolved from the JWT via
 ``get_current_student``).
 """

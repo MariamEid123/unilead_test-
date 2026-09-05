@@ -2,7 +2,7 @@
 
 Each logged-in student needs its own AI Education state — the
 ``StudentModelManager`` keeps competency graph, evidence history, etc. in
-memory. The Compass routes no longer share one global manager; instead,
+memory. The UniLead routes no longer share one global manager; instead,
 each request resolves the manager from the current user's ``student_id``.
 
 The pool is a plain dict keyed by ``student_id`` with LRU eviction
@@ -14,7 +14,7 @@ managers are rebuilt from the DB on next access
 The DB is the source of truth for *what* the student has demonstrated.
 The manager is rebuilt from the DB by re-recording every simulation run
 as PracticalEvidence, then re-applying the latest diagnostic placement
-and each transfer promotion to match the persisted Compass snapshot.
+and each transfer promotion to match the persisted UniLead snapshot.
 (Coach messages don't carry evidence in the AI Education sense.)
 """
 
@@ -115,7 +115,7 @@ def _replay_evidence_from_db(
       - Record it on the matching CompetencyRecord.
 
     The latest diagnostic placement and every transfer promotion are then
-    re-applied so the rebuilt manager matches the persisted Compass state.
+    re-applied so the rebuilt manager matches the persisted UniLead state.
     """
     try:
         from ai_education.domain.evidence import (
@@ -125,7 +125,7 @@ def _replay_evidence_from_db(
         )
 
         from ..db import SessionLocal, models
-        from ..services.ai_education_bridge import compass_id_to_mec271
+        from ..services.ai_education_bridge import UniLead_id_to_mec271
 
         db = SessionLocal()
         try:
@@ -136,7 +136,7 @@ def _replay_evidence_from_db(
                 .all()
             )
             for run in runs:
-                mec271_id = compass_id_to_mec271(run.competency_id)
+                mec271_id = UniLead_id_to_mec271(run.competency_id)
                 record = manager.profile.competencies.get(mec271_id)
                 if record is None:
                     continue
@@ -166,7 +166,7 @@ def _replay_evidence_from_db(
             # The DiagnosticEngine writes state directly (without evidence),
             # so a fresh manager would otherwise lose that placement. Re-apply
             # the most recent diagnostic submission so the manager matches the
-            # persisted Compass snapshot.
+            # persisted UniLead snapshot.
             _replay_latest_diagnostic(db, student_id, manager)
 
             # Transfer evaluations are likewise not carried as PracticalEvidence
@@ -189,7 +189,7 @@ def _replay_latest_diagnostic(db, student_id: str, manager: StudentModelManager)
     from ai_education.domain.diagnostic import DiagnosticEngine
 
     from ..db import models
-    from ..services.ai_education_bridge import compass_id_to_mec271
+    from ..services.ai_education_bridge import UniLead_id_to_mec271
 
     sub = (
         db.query(models.DiagnosticSubmission)
@@ -210,7 +210,7 @@ def _replay_latest_diagnostic(db, student_id: str, manager: StudentModelManager)
         # Aggregate per-competency correctness across the submission.
         raw_correct: dict[str, tuple[int, int]] = {}
         for a in comps:
-            mec271_id = compass_id_to_mec271(a.competency_id)
+            mec271_id = UniLead_id_to_mec271(a.competency_id)
             correct, total = raw_correct.get(mec271_id, (0, 0))
             raw_correct[mec271_id] = (correct + (1 if a.correct else 0), total + 1)
 
@@ -259,7 +259,7 @@ def _replay_transfer_promotions(db, student_id: str, manager: StudentModelManage
     the record one step NOT_DEMONSTRATED → DEVELOPING → DEMONSTRATED.
     """
     from ..db import models
-    from ..services.ai_education_bridge import compass_id_to_mec271
+    from ..services.ai_education_bridge import UniLead_id_to_mec271
 
     evals = (
         db.query(models.TransferEvaluation)
@@ -270,7 +270,7 @@ def _replay_transfer_promotions(db, student_id: str, manager: StudentModelManage
     for ev in evals:
         if not ev.passed:
             continue
-        mec271_id = compass_id_to_mec271(ev.competency_id)
+        mec271_id = UniLead_id_to_mec271(ev.competency_id)
         record = manager.profile.competencies.get(mec271_id)
         if record is None:
             continue

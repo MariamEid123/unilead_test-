@@ -26,6 +26,7 @@ Login flow:
 from __future__ import annotations
 
 import logging
+import smtplib
 import time
 from collections import defaultdict
 from datetime import UTC, datetime, timedelta
@@ -41,9 +42,11 @@ from ..db import crud, get_db
 from ..db.models import User
 from ..schemas.auth import (
     AuthResponse,
+    ForgotPasswordRequest,
     LoginRequest,
     MeResponse,
     ResendVerificationRequest,
+    ResetPasswordRequest,
     SignUpRequest,
     SignUpResponse,
     VerifiedResponse,
@@ -266,9 +269,100 @@ def signup(req: SignUpRequest, request: Request, db: Session = Depends(get_db)) 
     }
 
 
+@router.post("/design-preview", response_model=AuthResponse)
+def design_preview(db: Session = Depends(get_db)) -> dict:
+    """Create a local-only authenticated account for UI work."""
+    if Settings().env == "production":
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+
+    email = "design.preview@university.edu"
+    user = crud.get_user_by_email(db, email)
+    if user is None:
+        user = crud.create_user(
+            db,
+            email=email,
+            username="design_preview",
+            name="Design Preview",
+        )
+        user.email_verified = True
+        db.flush()
+    else:
+        user.email_verified = True
+
+    students = crud.get_students_by_user_id(db, user.id)
+    if not students:
+        student_id = _student_id_for_user(user.id)
+        crud.create_student(db, student_id=student_id, user_id=user.id, display_name=user.name)
+        _seed_initial_competencies(db, student_id)
+    db.commit()
+    students = crud.get_students_by_user_id(db, user.id)
+    return _auth_payload(user, students[0].student_id)
+
+
 def verification_code_cooldown(user: User) -> int:
     """Seconds the user must wait before the next resend request."""
     return int(verification.cooldown_remaining(user.email_verification_sent_at))
+
+
+def _issue_password_reset_code(db: Session, user: User) -> str:
+    code = verification.generate_code()
+    now = _utcnow()
+    crud.set_password_reset_code(
+        db,
+        user=user,
+        code_hash=verification.hash_code(code),
+        expires_at=now + timedelta(seconds=verification.code_ttl_seconds()),
+        sent_at=now,
+    )
+    db.commit()
+    verification.send_code(user.email, code)
+    return code
+
+
+@router.post("/forgot-password")
+def forgot_password(
+    req: ForgotPasswordRequest, request: Request, db: Session = Depends(get_db)
+) -> dict:
+    ip = request.client.host if request.client else "unknown"
+    _check_signup_rate_limit(ip)
+
+    user = crud.get_user_by_email(db, req.email)
+    if user is not None:
+        remain = verification.cooldown_remaining(user.password_reset_sent_at)
+        if remain <= 0:
+            try:
+                _issue_password_reset_code(db, user)
+            except (OSError, RuntimeError, smtplib.SMTPException):
+                # Keep the response generic even when the configured mail
+                # provider is unavailable; never reveal account existence.
+                _log.exception("Password reset email delivery failed")
+
+    return {"message": "If an account exists for this email, a reset code has been sent."}
+
+
+@router.post("/reset-password")
+def reset_password(
+    req: ResetPasswordRequest, request: Request, db: Session = Depends(get_db)
+) -> dict:
+    ip = request.client.host if request.client else "unknown"
+    _check_verify_rate_limit(ip)
+
+    user = crud.get_user_by_email(db, req.email)
+    if user is None:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset code.")
+
+    if (
+        not user.password_reset_code_hash
+        or user.password_reset_expires_at is None
+        or _utcnow() > user.password_reset_expires_at
+        or not verification.verify_code(req.code.strip(), user.password_reset_code_hash)
+    ):
+        raise HTTPException(status_code=400, detail="Invalid or expired reset code.")
+
+    user.password_hash = hash_password(req.new_password)
+    crud.clear_password_reset_code(db, user=user)
+    db.commit()
+    return {"message": "Password updated successfully. You can now log in."}
 
 
 @router.post(

@@ -17,7 +17,7 @@ const STATUS_CONFIG: Record<CompetencyStatus, { label: string; tone: BadgeTone }
   NOT_STARTED: { label: 'Not Started', tone: 'neutral' },
   NEEDS_PRACTICE: { label: 'Needs Practice', tone: 'danger' },
   DEVELOPING: { label: 'Developing', tone: 'warning' },
-  DEMONSTRATED: { label: 'Demonstrated', tone: 'success' },
+  DEMONSTRATED: { label: 'Demonstrated', tone: 'accent' },
 };
 
 export function StatusBadge({ status }: { status: CompetencyStatus }) {

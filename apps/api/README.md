@@ -2,7 +2,7 @@
 
 Unified FastAPI gateway for the Unilead platform. Combines:
 
-- The **Compass MVP** API (competencies, progress, diagnostic, learning, practice,
+- The **UniLead MVP** API (competencies, progress, diagnostic, learning, practice,
   coach, review, simulation, onboarding) — original Platform backend routes
   mounted under `/api/*`.
 - The **AI Education** gateway (coach chat, evidence telemetry, simulate,

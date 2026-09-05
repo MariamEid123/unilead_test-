@@ -1,7 +1,7 @@
 """Unified FastAPI entrypoint for the Unilead platform.
 
 This single app serves both:
-  - The Compass MVP API (competencies, progress, diagnostic, learning,
+  - The UniLead MVP API (competencies, progress, diagnostic, learning,
     practice, coach, review, simulation, onboarding, **remediation,
     transfer**) — original Platform backend routes under ``/api/*``.
   - The AI Education gateway (coach chat, evidence telemetry, simulate,
@@ -12,7 +12,7 @@ configuration. The AI Education half is wired from the ai_education
 library at ``services/ai_education/`` (imported via the path bootstrap
 in ``app.config``).
 
-The Compass services (``coach_service``, ``simulation_service``,
+The UniLead services (``coach_service``, ``simulation_service``,
 ``diagnostic_service``) are wired to the same AI Education singletons
 via the ``ai_education_bridge`` module — so a coach turn or a simulation
 run on ``/api/coach`` or ``/api/simulation`` updates the same student
@@ -108,11 +108,11 @@ manager, orchestrator, reasoning_engine, provider = build_singletons(settings)
 app = FastAPI(
     title="Unilead API",
     description=(
-        "Unified gateway for the Unilead platform. Serves both the Compass "
+        "Unified gateway for the Unilead platform. Serves both the UniLead "
         "MVP API (competencies, progress, diagnostic, learning, practice, "
         "coach, review, simulation, onboarding, remediation, transfer) and "
         "the AI Education gateway (coach chat, evidence telemetry, student "
-        "profile). The Compass services are wired to the same AI Education "
+        "profile). The UniLead services are wired to the same AI Education "
         "singletons so every endpoint shares one student model. All state "
         "is persisted to SQLite via SQLAlchemy — see the db/ package."
     ),
@@ -161,7 +161,7 @@ app.state.llm_provider = provider
 app.state.ai_education_llm_provider = provider  # alias used by manager_pool.py
 app.state.llm_settings = settings
 
-# --- Compass MVP routes (under /api/*) --------------------------------------
+# --- UniLead MVP routes (under /api/*) --------------------------------------
 app.include_router(onboarding.router)
 app.include_router(diagnostic.router)
 app.include_router(learning.router)
@@ -182,7 +182,7 @@ app.include_router(auth.router)
 
 # The legacy AI Education gateway routes (/api/ai-education/*) are still
 # available as a back-compat layer — they construct a per-request gateway
-# from the default student_id. The Compass routes (above) are the primary
+# from the default student_id. The UniLead routes (above) are the primary
 # entry points used by the frontend and now read student_id from the JWT.
 
 # Build a default student_manager so the legacy routes still work for tests
@@ -233,7 +233,7 @@ def health_check() -> dict:
     return {
         "status": "ok",
         "service": "unilead-api",
-        "modules": ["compass", "ai-education"],
+        "modules": ["UniLead", "ai-education"],
     }
 
 

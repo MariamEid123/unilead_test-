@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Card from '../components/ui/Card';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
@@ -11,11 +11,15 @@ import './SignUp.css';
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setStudent, setSession } = useApp();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string; form?: string }>({});
   const [loading, setLoading] = useState(false);
+  const successMessage = (location.state as { message?: string } | null)?.message;
+  const sessionMessage = sessionStorage.getItem('unilead_auth_message');
+  if (sessionMessage) sessionStorage.removeItem('unilead_auth_message');
 
   function validate() {
     const next: typeof errors = {};
@@ -38,7 +42,8 @@ export default function Login() {
       // Load the student state for this account.
       const student = await getStudent();
       setStudent({ ...student, name: session.name, email: session.email });
-      navigate('/home');
+      const destination = (location.state as { from?: string } | null)?.from ?? '/home';
+      navigate(destination, { replace: true });
     } catch (err) {
       // 403 from login = correct password but the email isn't verified yet.
       // Send them to the verification screen (a code is already in their inbox).
@@ -58,7 +63,7 @@ export default function Login() {
     <div className="signup">
       <div className="signup__panel">
         <div className="signup__brand">
-          <span className="signup__brand-mark">◆</span> Compass
+          <img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> UniLead
         </div>
         <h2 className="signup__headline">Welcome back.</h2>
         <p className="signup__subtext muted">
@@ -72,6 +77,7 @@ export default function Login() {
           <p className="muted signup__lede">Continue your competency journey.</p>
 
           {errors.form && <div className="signup__error">{errors.form}</div>}
+          {(successMessage || sessionMessage) && <div className="signup__success">{successMessage || sessionMessage}</div>}
 
           <form onSubmit={handleSubmit} className="signup__form" noValidate>
             <Input
@@ -90,6 +96,9 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               error={errors.password}
             />
+            <p className="muted signup__alt" style={{ margin: '-8px 0 0', textAlign: 'right' }}>
+              <Link to="/forgot-password">Forgot password?</Link>
+            </p>
             <Button type="submit" fullWidth size="lg" loading={loading}>
               Log In
             </Button>

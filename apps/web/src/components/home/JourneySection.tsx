@@ -16,14 +16,13 @@ const JourneySection = forwardRef<HTMLElement>(function JourneySection(_props, r
       <div className="journey__inner">
         <h2 className="journey__title">Your Learning Journey</h2>
         <p className="journey__subtitle muted">
-          This isn't a list of videos to finish. Each step builds toward one goal: real,
-          demonstrated competency.
+          Six steps. One goal: demonstrated competency.
         </p>
 
         <ol className="journey__timeline">
           {STEPS.map((step) => (
             <li key={step.number} className="journey__step">
-              <div className="journey__marker">{step.number}</div>
+              <div className={`journey__marker ${step.number === '06' ? 'journey__marker--final' : ''}`}>{step.number}</div>
               <div className="journey__step-body">
                 <h3 className="journey__step-label">{step.label}</h3>
                 <p className="muted journey__step-description">{step.description}</p>

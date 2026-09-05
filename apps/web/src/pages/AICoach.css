@@ -84,7 +84,7 @@
 .ai-coach__bubble--student {
   align-self: flex-end;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-surface);
   border-bottom-right-radius: 4px;
 }
 
@@ -169,7 +169,7 @@
   padding: 8px 12px;
   border-radius: var(--radius-md);
   border: 1.5px solid var(--color-border);
-  background: #fff;
+  background: var(--color-surface);
   font-size: var(--fs-sm);
   font-family: inherit;
   color: var(--color-text);

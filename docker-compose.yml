@@ -27,6 +27,13 @@ services:
       - JWT_SECRET=${JWT_SECRET:-dev-secret-change-me}
       - ENFORCE_JWT_SECRET=${ENFORCE_JWT_SECRET:-false}
       - LLM_PROVIDER_TYPE=${LLM_PROVIDER_TYPE:-mock}
+      - EMAIL_BACKEND=${EMAIL_BACKEND:-log}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_STARTTLS=${SMTP_STARTTLS:-true}
+      - SMTP_USERNAME=${SMTP_USERNAME:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL:-no-reply@UniLead.edu}
       - CORS_ORIGINS=http://localhost:5173,http://localhost:80
       - ENV=development
     depends_on:

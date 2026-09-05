@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" role="img" aria-labelledby="title desc">
+  <title id="title">UniLead</title>
+  <desc id="desc">UniLead learning platform logo</desc>
+  <defs>
+    <linearGradient id="mark" x1="32" y1="20" x2="160" y2="224" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22C1DC"/>
+      <stop offset=".52" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(24 18)">
+    <path fill="#0F172A" d="M22 78h34v73c0 28 17 45 39 45s39-17 39-45V78h34v75c0 47-29 76-73 76s-73-29-73-76V78Z"/>
+    <path fill="url(#mark)" d="m95 0 78 42-78 42-78-42L95 0Z"/>
+    <path fill="#fff" d="m95 25 39 21-39 21-39-21 39-21Z" opacity=".92"/>
+    <circle cx="95" cy="139" r="18" fill="#22C1DC"/>
+    <path fill="#4F46E5" d="m56 153 39 22 39-22v25l-39 23-39-23v-25Z"/>
+    <path fill="#22C1DC" d="m56 153 39 22 39-22-39-22-39 22Z"/>
+  </g>
+  <text x="245" y="142" fill="#0F172A" font-family="Inter, Poppins, Arial, sans-serif" font-size="112" font-weight="800" letter-spacing="-3">UniLead</text>
+  <text x="253" y="190" fill="#0F172A" font-family="Inter, Poppins, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="8">LEARN</text>
+  <circle cx="382" cy="182" r="7" fill="#22C1DC"/>
+  <text x="412" y="190" fill="#0F172A" font-family="Inter, Poppins, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="8">PRACTICE</text>
+  <circle cx="616" cy="182" r="7" fill="#7C3AED"/>
+  <text x="646" y="190" fill="#0F172A" font-family="Inter, Poppins, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="8">LEAD</text>
+  <text x="253" y="226" fill="#475569" font-family="Inter, Poppins, Arial, sans-serif" font-size="18" font-weight="500">AI-powered learning, real-world mastery.</text>
+</svg>

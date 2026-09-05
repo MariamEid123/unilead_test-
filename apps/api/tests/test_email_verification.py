@@ -165,3 +165,41 @@ def test_verify_unknown_email_is_400(client):
         json={"email": "nobody-invalid@university.edu.eg", "code": "123456"},
     )
     assert r.status_code == 400
+
+
+def test_forgot_password_is_generic_and_reset_succeeds(client):
+    email = _signup(client, "vtrst_")
+    unknown = client.post(
+        "/api/auth/forgot-password", json={"email": "nobody-invalid@university.edu.eg"}
+    )
+    assert unknown.status_code == 200
+    assert "If an account exists" in unknown.json()["message"]
+
+    requested = client.post("/api/auth/forgot-password", json={"email": email})
+    assert requested.status_code == 200
+    code = verification.last_sent[email]
+    reset = client.post(
+        "/api/auth/reset-password",
+        json={"email": email, "code": code, "new_password": "N3w!Password"},
+    )
+    assert reset.status_code == 200
+    login = client.post(
+        "/api/auth/login", json={"email": email, "password": "N3w!Password"}
+    )
+    assert login.status_code == 403  # the signup account remains unverified
+
+
+def test_reset_password_rejects_bad_code_and_weak_password(client):
+    email = _signup(client, "vtrsb_")
+    requested = client.post("/api/auth/forgot-password", json={"email": email})
+    assert requested.status_code == 200
+    bad_code = client.post(
+        "/api/auth/reset-password",
+        json={"email": email, "code": "000000", "new_password": "N3w!Password"},
+    )
+    assert bad_code.status_code == 400
+    weak_password = client.post(
+        "/api/auth/reset-password",
+        json={"email": email, "code": verification.last_sent[email], "new_password": "password"},
+    )
+    assert weak_password.status_code == 422

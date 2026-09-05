@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field
 class RemediationPlanResponse(BaseModel):
     """A targeted remediation plan for one competency."""
 
-    competency_id: str = Field(..., description="Compass competency id.")
+    competency_id: str = Field(..., description="UniLead competency id.")
     detected_misconception: str | None = Field(
         default=None,
         description="PID misconception detected from the failure telemetry.",

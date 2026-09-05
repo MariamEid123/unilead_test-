@@ -607,6 +607,11 @@ export async function signUp(req: SignUpRequest): Promise<SignUpResult> {
   return mapSignUpResponse(r);
 }
 
+export async function designPreviewLogin(): Promise<AuthSession> {
+  const r = await apiPost<ApiAuthResponse>('/auth/design-preview', {});
+  return mapAuthResponse(r);
+}
+
 export async function verifyEmail(req: VerifyEmailRequest): Promise<AuthSession> {
   const r = await apiPost<ApiAuthResponse>('/auth/verify-email', {
     email: req.email,
@@ -627,6 +632,22 @@ export async function resendVerificationCode(email: string): Promise<{
 }> {
   const r = await apiPost<ApiResendResponse>('/auth/resend-verification', { email });
   return { email: r.email, resendAfterSeconds: r.resend_after_seconds };
+}
+
+export async function forgotPassword(email: string): Promise<{ message: string }> {
+  return apiPost<{ message: string }>('/auth/forgot-password', { email });
+}
+
+export async function resetPassword(req: {
+  email: string;
+  code: string;
+  newPassword: string;
+}): Promise<{ message: string }> {
+  return apiPost<{ message: string }>('/auth/reset-password', {
+    email: req.email,
+    code: req.code,
+    new_password: req.newPassword,
+  });
 }
 
 export async function login(req: LoginRequest): Promise<AuthSession> {

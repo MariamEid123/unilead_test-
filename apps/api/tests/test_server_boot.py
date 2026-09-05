@@ -2,11 +2,11 @@
 
 Verifies the three things that ``apps/api/app/main.py`` promises:
   - importing the module yields a FastAPI app,
-  - the Compass MVP routes are mounted under ``/api/*`` (now JWT-protected),
+  - the UniLead MVP routes are mounted under ``/api/*`` (now JWT-protected),
   - the AI Education routes are mounted under ``/api/ai-education/*``,
   - both halves answer their respective liveness probes with 200.
 
-Because most Compass routes now require authentication, the tests sign up
+Because most UniLead routes now require authentication, the tests sign up
 a fresh demo user and use the returned JWT to call the protected routes.
 """
 
@@ -46,7 +46,7 @@ def _signup_and_verify(client, email: str = "", password: str = "TestPass!123") 
     return response.json()["access_token"], email
 
 
-def test_app_exposes_compass_routes() -> None:
+def test_app_exposes_UniLead_routes() -> None:
     """``/api/competencies`` is JWT-protected — sign up, verify, then GET."""
     client = TestClient(app)
     token, _ = _signup_and_verify(client)
@@ -64,7 +64,7 @@ def test_app_exposes_compass_routes() -> None:
         assert c["progress"] == 0, f"{c['name']} should start at 0%"
 
 
-def test_compass_routes_reject_missing_token() -> None:
+def test_UniLead_routes_reject_missing_token() -> None:
     """Without a JWT, ``/api/competencies`` should 401."""
     client = TestClient(app)
     response = client.get("/api/competencies")
@@ -85,7 +85,7 @@ def test_root_health_check_reports_both_modules() -> None:
     body = response.json()
     assert body["status"] == "ok"
     assert body["service"] == "unilead-api"
-    assert "compass" in body["modules"]
+    assert "UniLead" in body["modules"]
     assert "ai-education" in body["modules"]
 
 

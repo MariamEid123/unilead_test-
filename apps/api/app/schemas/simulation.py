@@ -20,7 +20,7 @@ class SimulationRequest(BaseModel):
     competency_id: str | None = Field(
         default="pid-tuning",
         max_length=64,
-        description="Compass competency id this simulation is evidence for.",
+        description="UniLead competency id this simulation is evidence for.",
     )
     task_id: str = Field(
         default="pid-001",
@@ -45,7 +45,7 @@ class SimulationResult(BaseModel):
     requirements_met: bool = Field(..., description="True if all task thresholds were met.")
     result: str = Field(..., description="'PASS' or 'FAIL'.")
     attempt: int = Field(..., description="1-based attempt number for this competency.")
-    competency_id: str = Field(..., description="Compass competency id this run is evidence for.")
+    competency_id: str = Field(..., description="UniLead competency id this run is evidence for.")
     misconception: str | None = Field(
         default=None,
         description="Detected PID misconception (only set on FAIL).",

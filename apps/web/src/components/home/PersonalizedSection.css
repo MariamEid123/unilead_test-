@@ -1,5 +1,5 @@
 .personalized {
-  background: #ffffff;
+  background: var(--color-surface);
 }
 
 .personalized__inner {
@@ -17,7 +17,7 @@
 }
 
 .personalized__card {
-  background: linear-gradient(150deg, #ffffff 0%, var(--color-primary-light) 130%);
+  background: linear-gradient(150deg, var(--color-surface) 0%, var(--color-primary-light) 130%);
 }
 
 .personalized__top {

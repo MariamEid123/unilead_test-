@@ -150,7 +150,7 @@ export default function AICoach() {
       <Card padding="lg" className="ai-coach__panel">
         <div className="ai-coach__header">
           <h1 className="ai-coach__title">AI Coach</h1>
-          {finished && <Badge tone="success">Demonstrated</Badge>}
+          {finished && <Badge tone="accent">Demonstrated</Badge>}
         </div>
 
         {/* NEW: Mode selector — lets the student pick the coaching mode, or

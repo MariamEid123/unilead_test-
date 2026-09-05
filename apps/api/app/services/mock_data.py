@@ -11,7 +11,7 @@ COURSE_TITLE = "Automatic Control"
 # The initial competency set. Every new student starts at zero — no
 # demonstrated competencies, no progress. Whatever they demonstrate is
 # earned through the loop (diagnostic → learn → practice → simulation →
-# transfer). The Compass services read+write this to the DB.
+# transfer). The UniLead services read+write this to the DB.
 INITIAL_COMPETENCIES = [
     {
         "id": "feedback-fundamentals",

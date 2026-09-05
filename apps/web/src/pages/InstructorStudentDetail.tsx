@@ -92,8 +92,7 @@ export default function InstructorStudentDetailPage() {
         {detail?.displayName ?? 'Student Detail'}
       </h1>
       <p className="muted instructor-student-detail__subtitle">
-        Per-competency status + chronological evidence timeline. No LLM in this view — just
-        objective evidence the simulation/transfer engines produced.
+        Competency status and evidence, at a glance.
       </p>
 
       {phase === 'loading' && <LoadingState message="Loading student detail…" />}
@@ -144,7 +143,7 @@ export default function InstructorStudentDetailPage() {
           <Card padding="lg" className="instructor-student-detail__timeline-card">
             <h2 className="instructor-student-detail__section-title">Evidence Timeline</h2>
             <p className="muted instructor-student-detail__section-hint">
-              Newest first — chronological feed of every event that produced evidence.
+              Newest evidence first.
             </p>
             {detail.evidenceTimeline.length === 0 ? (
               <EmptyState

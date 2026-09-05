@@ -12,16 +12,16 @@
   cursor: pointer;
   font-size: var(--fs-md);
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.72);
   padding: 8px 4px;
 }
 
 .dropdown__trigger--active {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 .dropdown__trigger:hover {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 .dropdown__chevron {

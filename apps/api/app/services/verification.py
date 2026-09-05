@@ -102,6 +102,10 @@ def _send_via_smtp(email: str, code: str) -> None:
 def send_code(email: str, code: str) -> None:
     """Deliver a verification code to ``email`` per the configured backend."""
     if _settings.email_backend == "smtp":
+        if not _settings.smtp_host:
+            raise RuntimeError(
+                "Email delivery is configured for SMTP, but SMTP_HOST is missing."
+            )
         _send_via_smtp(email, code)
     else:
         _send_via_log(email, code)

@@ -38,8 +38,8 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar__inner">
         <Link to="/home" className="navbar__brand">
-          <span className="navbar__brand-mark">◆</span>
-          Compass
+          <img className="navbar__brand-mark" src="/unilead-mark.svg" alt="" />
+          UniLead
         </Link>
 
         <nav className="navbar__links">

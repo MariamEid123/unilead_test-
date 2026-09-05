@@ -14,4 +14,4 @@
 .badge--danger { background: var(--color-danger-light); color: var(--color-danger); }
 .badge--neutral { background: var(--color-neutral-light); color: var(--color-neutral); }
 .badge--primary { background: var(--color-primary-light); color: var(--color-primary); }
-.badge--accent { background: var(--color-accent-light); color: var(--color-accent-dark); }
+.badge--accent { background: var(--color-accent-light); color: var(--color-primary-dark); }
