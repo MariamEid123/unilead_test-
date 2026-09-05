@@ -13,9 +13,9 @@ interface PersonalizedSectionProps {
 
 export default function PersonalizedSection({ state, onRetry }: PersonalizedSectionProps) {
   return (
-    <section className="personalized">
+    <section className="personalized personalized--next-action">
       <div className="personalized__inner">
-        <h2 className="personalized__title">Your Learning Journey</h2>
+        <h2 className="personalized__title">Your Next Action</h2>
 
         {(state.status === 'loading' || state.status === 'idle') && (
           <Card padding="lg">
@@ -52,8 +52,8 @@ function PersonalizedContent({
     <Card padding="lg" className="personalized__card">
       <div className="personalized__top">
         <div>
-          <span className="personalized__course-code">{student.course.code}</span>
-          <h3 className="personalized__course-title">{student.course.title}</h3>
+          <span className="personalized__course-code">Welcome back, {student.name}</span>
+          <h3 className="personalized__course-title">Resume: {recommendation.title}</h3>
         </div>
         <div className="personalized__progress-figure">
           <span className="personalized__progress-number">{student.overallProgress}%</span>
@@ -65,22 +65,22 @@ function PersonalizedContent({
 
       <div className="personalized__grid">
         <div className="personalized__field">
-          <span className="personalized__field-label">Current Focus</span>
+          <span className="personalized__field-label">Current module</span>
           <span className="personalized__field-value">{currentCompetency.name}</span>
         </div>
         <div className="personalized__field">
-          <span className="personalized__field-label">Recommended Next Step</span>
+          <span className="personalized__field-label">Next step</span>
           <span className="personalized__field-value">{recommendation.title}</span>
         </div>
       </div>
 
       <p className="personalized__reason">
-        <span className="personalized__reason-label">Reason: </span>
+        <span className="personalized__reason-label">Why now: </span>
         {recommendation.reason}
       </p>
 
       <Button size="lg" onClick={() => navigate(recommendation.href)}>
-        Continue Learning →
+        Resume Now →
       </Button>
     </Card>
   );

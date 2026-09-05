@@ -121,58 +121,6 @@ export default function Simulation() {
         </svg>
       </Card>
 
-      {/* NEW: Kp / Ki / Kd sliders. */}
-      <Card padding="lg" className="simulation__gains-card">
-        <h2 className="simulation__section-title">Controller Gains</h2>
-        <div className="simulation__sliders">
-          <label className="simulation__slider">
-            <span className="simulation__slider-label">
-              <strong>Kp</strong> — Proportional
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="15"
-              step="0.1"
-              value={kp}
-              onChange={(e) => setKp(parseFloat(e.target.value))}
-              disabled={phase === 'running'}
-            />
-            <span className="simulation__slider-value">{kp.toFixed(2)}</span>
-          </label>
-          <label className="simulation__slider">
-            <span className="simulation__slider-label">
-              <strong>Ki</strong> — Integral
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              step="0.1"
-              value={ki}
-              onChange={(e) => setKi(parseFloat(e.target.value))}
-              disabled={phase === 'running'}
-            />
-            <span className="simulation__slider-value">{ki.toFixed(2)}</span>
-          </label>
-          <label className="simulation__slider">
-            <span className="simulation__slider-label">
-              <strong>Kd</strong> — Derivative
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="5"
-              step="0.05"
-              value={kd}
-              onChange={(e) => setKd(parseFloat(e.target.value))}
-              disabled={phase === 'running'}
-            />
-            <span className="simulation__slider-value">{kd.toFixed(2)}</span>
-          </label>
-        </div>
-      </Card>
-
       {/* Requirements the simulator evaluates against. */}
       <Card padding="md" className="simulation__requirements-card">
         <h3 className="simulation__subsection-title">Task Requirements</h3>
@@ -189,6 +137,16 @@ export default function Simulation() {
             </li>
           ))}
         </ul>
+      </Card>
+
+      {/* Kp / Ki / Kd sliders stay immediately below the requirements. */}
+      <Card padding="lg" className="simulation__gains-card">
+        <h2 className="simulation__section-title">Controller Gains</h2>
+        <div className="simulation__sliders">
+          <label className="simulation__slider"><span className="simulation__slider-label"><strong>Kp</strong> — Proportional</span><input type="range" min="0" max="15" step="0.1" value={kp} onChange={(e) => setKp(parseFloat(e.target.value))} disabled={phase === 'running'} /><span className="simulation__slider-value">{kp.toFixed(2)}</span></label>
+          <label className="simulation__slider"><span className="simulation__slider-label"><strong>Ki</strong> — Integral</span><input type="range" min="0" max="10" step="0.1" value={ki} onChange={(e) => setKi(parseFloat(e.target.value))} disabled={phase === 'running'} /><span className="simulation__slider-value">{ki.toFixed(2)}</span></label>
+          <label className="simulation__slider"><span className="simulation__slider-label"><strong>Kd</strong> — Derivative</span><input type="range" min="0" max="5" step="0.05" value={kd} onChange={(e) => setKd(parseFloat(e.target.value))} disabled={phase === 'running'} /><span className="simulation__slider-value">{kd.toFixed(2)}</span></label>
+        </div>
       </Card>
 
       <Card padding="lg" className="simulation__card">

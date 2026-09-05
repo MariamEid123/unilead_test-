@@ -39,6 +39,17 @@ export default function Home() {
   }, [journey]);
 
   const primaryHref = state.status === 'success' ? state.data.recommendation.href : FALLBACK_HREF;
+  const activeStep = journey.hasCompletedReview
+    ? 6
+    : journey.hasCompletedSimulation
+      ? 6
+      : journey.hasCompletedPractice
+        ? 5
+        : journey.hasCompletedLearning
+          ? 4
+          : journey.hasCompletedDiagnostic
+            ? 2
+            : 1;
 
   function scrollToJourney() {
     journeySectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -48,7 +59,7 @@ export default function Home() {
     <div className="home">
       <Hero primaryHref={primaryHref} onExploreClick={scrollToJourney} />
       <ValueProps />
-      <JourneySection ref={journeySectionRef} />
+      <JourneySection ref={journeySectionRef} activeStep={activeStep} />
       <Differentiators />
       <PersonalizedSection state={state} onRetry={load} />
       <FinalCta href={primaryHref} />

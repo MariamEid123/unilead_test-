@@ -2,10 +2,14 @@
   background: var(--color-surface);
 }
 
+.personalized--next-action {
+  background: var(--color-bg);
+}
+
 .personalized__inner {
   max-width: 760px;
   margin: 0 auto;
-  padding: var(--space-7) var(--space-5);
+  padding: var(--space-6) var(--space-5) var(--space-7);
 }
 
 .personalized__title {
@@ -17,7 +21,25 @@
 }
 
 .personalized__card {
-  background: linear-gradient(150deg, var(--color-surface) 0%, var(--color-primary-light) 130%);
+  background: var(--color-primary-dark);
+  color: var(--color-surface);
+  border: none;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.personalized__card::after {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -90px;
+  top: -120px;
+  border: 1px solid rgba(34, 193, 220, 0.35);
+  border-radius: 50%;
+  box-shadow: 0 0 0 22px rgba(34, 193, 220, 0.08);
+  pointer-events: none;
 }
 
 .personalized__top {
@@ -34,7 +56,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 .personalized__course-title {
@@ -53,7 +75,7 @@
 .personalized__progress-number {
   font-size: var(--fs-2xl);
   font-weight: 800;
-  color: var(--color-primary);
+  color: var(--color-accent);
   line-height: 1;
 }
 
@@ -80,28 +102,28 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--color-text-faint);
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .personalized__field-value {
   font-size: var(--fs-md);
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-surface);
 }
 
 .personalized__reason {
   margin-top: var(--space-4);
   padding: var(--space-3) var(--space-4);
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
   font-size: var(--fs-sm);
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.5;
 }
 
 .personalized__reason-label {
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-surface);
 }
 
 .personalized__card > .btn {
