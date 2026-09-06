@@ -66,7 +66,7 @@ export default function Practice() {
 
   return (
     <div className="page-narrow practice">
-      <button className="practice__back" type="button" onClick={() => navigate('/my-learning/learning')}>← Back</button>
+      <button className="practice__back" type="button" onClick={() => navigate('/courses')}>← Back to Courses</button>
       <div className="practice__eyebrow">Practice Task</div>
       <h1 className="practice__title">{task.title}</h1>
 

@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for Unilead
+about: Suggest an idea for Areta
 title: "[Feature] <short description>"
 labels: enhancement
 assignees: ""

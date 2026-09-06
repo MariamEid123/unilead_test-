@@ -39,7 +39,7 @@ export default function ForgotPassword() {
   return (
     <div className="signup">
       <div className="signup__panel">
-        <div className="signup__brand"><img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> UniLead</div>
+        <div className="signup__brand"><img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> Areta</div>
         <h2 className="signup__headline">Find your way back.</h2>
         <p className="signup__subtext muted">We will send a short-lived code to reset your password securely.</p>
       </div>

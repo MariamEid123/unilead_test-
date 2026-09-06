@@ -4,13 +4,15 @@ import ValueProps from '../components/home/ValueProps';
 import JourneySection from '../components/home/JourneySection';
 import Differentiators from '../components/home/Differentiators';
 import PersonalizedSection from '../components/home/PersonalizedSection';
+import CourseSection from '../components/home/CourseSection';
 import FinalCta from '../components/home/FinalCta';
 import HomeFooter from '../components/home/HomeFooter';
 import { useApp } from '../state/AppContext';
-import { getStudent, getRecommendation } from '../data/mockApi';
+import { getStudent } from '../data/mockApi';
+import { COURSE_CATALOG } from '../data/courses';
 import type { AsyncState, Recommendation, Student } from '../types';
 
-const FALLBACK_HREF = '/my-learning';
+const COURSES_HREF = '/courses';
 
 export default function Home() {
   const { student, setStudent, journey } = useApp();
@@ -24,8 +26,16 @@ export default function Home() {
     try {
       const s = student ?? (await getStudent());
       if (!student) setStudent(s);
-      const activeCompetency = s.competencies.find((c) => c.status === 'DEVELOPING') ?? s.competencies[0]!;
-      const rec = await getRecommendation(journey, activeCompetency.name);
+      const supportedCourse = COURSE_CATALOG.find((course) => course.title === s.course.title);
+      const hasRecognizedProgress = supportedCourse !== undefined && s.overallProgress > 0;
+      const rec: Recommendation = {
+        id: hasRecognizedProgress ? 'rec-continue-learning' : 'rec-start-learning',
+        title: hasRecognizedProgress ? 'Continue Learning' : 'Start Learning',
+        reason: hasRecognizedProgress
+          ? `Continue with ${supportedCourse.title} from the Courses page.`
+          : 'Choose Physics Fundamentals or Math Zero: Foundations to begin.',
+        href: COURSES_HREF,
+      };
       setState({ status: 'success', data: { student: s, recommendation: rec } });
     } catch (err) {
       setState({ status: 'error', message: err instanceof Error ? err.message : 'Failed to load your dashboard.' });
@@ -38,7 +48,8 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [journey]);
 
-  const primaryHref = state.status === 'success' ? state.data.recommendation.href : FALLBACK_HREF;
+  const primaryHref = state.status === 'success' ? state.data.recommendation.href : COURSES_HREF;
+  const primaryLabel = state.status === 'success' ? state.data.recommendation.title : 'Start Learning';
   const activeStep = journey.hasCompletedReview
     ? 6
     : journey.hasCompletedSimulation
@@ -57,12 +68,13 @@ export default function Home() {
 
   return (
     <div className="home">
-      <Hero primaryHref={primaryHref} onExploreClick={scrollToJourney} />
+      <Hero primaryHref={primaryHref} primaryLabel={primaryLabel} onExploreClick={scrollToJourney} />
       <ValueProps />
       <JourneySection ref={journeySectionRef} activeStep={activeStep} />
       <Differentiators />
       <PersonalizedSection state={state} onRetry={load} />
-      <FinalCta href={primaryHref} />
+      <CourseSection />
+      <FinalCta href={primaryHref} label={primaryLabel} />
       <HomeFooter />
     </div>
   );

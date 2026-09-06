@@ -38,7 +38,7 @@ export default function Navbar() {
       <div className="navbar__inner">
         <Link to="/home" className="navbar__brand">
           <img className="navbar__brand-mark" src="/unilead-mark.svg" alt="" />
-          UniLead
+          Areta
         </Link>
 
         <nav className="navbar__links">
@@ -49,12 +49,14 @@ export default function Navbar() {
             Home
           </Link>
 
-          <Link className={`navbar__link ${isActive('/my-learning') ? 'navbar__link--active' : ''}`} to="/my-learning/learning">
-            Learn
+          <Link className={`navbar__link ${isActive('/courses') ? 'navbar__link--active' : ''}`} to="/courses">
+            Courses
           </Link>
-          <Link className={`navbar__link ${isActive('/apply-review') ? 'navbar__link--active' : ''}`} to="/apply-review">
-            Apply
+
+          <Link className={`navbar__link ${isActive('/plans') ? 'navbar__link--active' : ''}`} to="/plans">
+            Plans
           </Link>
+
           <Link className={`navbar__link ${isActive('/progress') ? 'navbar__link--active' : ''}`} to="/progress">
             Progress
           </Link>

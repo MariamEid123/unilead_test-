@@ -3,7 +3,7 @@
 Uses SQLAlchemy 2.0 sync API. The engine is created once at import time
 using the ``DATABASE_URL`` env var.
 
-- Default (local dev): SQLite — ``sqlite:///./unilead.db`` (zero-config).
+- Default (local dev): SQLite — ``sqlite:///./Areta.db`` (zero-config).
 - Production: PostgreSQL — ``postgresql+psycopg://user:pass@host:5432/db``.
 
 Engine tweaks are chosen per dialect: SQLite gets ``check_same_thread=False``

@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableDelayedExpansion
 REM ============================================================
-REM  Unilead Platform - One-Click Launcher
+REM  Areta Platform - One-Click Launcher
 REM ============================================================
 
 set "PROJECT_ROOT=%~dp0"
@@ -14,7 +14,7 @@ set "FRONTEND_URL=http://localhost:!FRONTEND_PORT!"
 
 echo.
 echo ============================================================
-echo  Unilead Platform - Starting...
+echo  Areta Platform - Starting...
 echo ============================================================
 echo  Backend: !BACKEND_URL!
 echo  Frontend: !FRONTEND_URL!
@@ -75,7 +75,7 @@ echo [OK] DB ready.
 
 echo [START] Launching backend on !BACKEND_URL! ...
 pushd "!API_DIR!"
-start "Unilead Backend" cmd /k "call .venv\Scripts\activate.bat && uvicorn app.main:app --reload --host 127.0.0.1 --port !BACKEND_PORT!"
+start "Areta Backend" cmd /k "call .venv\Scripts\activate.bat && uvicorn app.main:app --reload --host 127.0.0.1 --port !BACKEND_PORT!"
 popd
 
 echo [WAIT] Waiting for backend to start...
@@ -94,7 +94,7 @@ echo [OK] Backend is up.
 
 echo [START] Launching frontend on !FRONTEND_URL! ...
 pushd "!WEB_DIR!"
-start "Unilead Frontend" cmd /k "npm run dev -- --port !FRONTEND_PORT!"
+start "Areta Frontend" cmd /k "npm run dev -- --port !FRONTEND_PORT!"
 popd
 
 echo [WAIT] Waiting for frontend to start...

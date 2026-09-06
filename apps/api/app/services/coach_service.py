@@ -3,7 +3,7 @@
 The original mock returned a fixed ``COACH_SCRIPT`` indexed by ``turn_index``.
 This wired version builds a ``CoachTurnRequest`` for the
 ``AICoachOrchestrator`` and translates its ``CoachTurnResponse`` back into
-the UniLead-facing ``CoachResponse`` shape.
+the Areta-facing ``CoachResponse`` shape.
 
 Falls back to a deterministic script if anything goes wrong with the LLM
 provider — the orchestrator already does this internally via
@@ -23,7 +23,7 @@ from ..schemas.coach import CoachResponse
 from . import ai_education_bridge, student_state
 from .mock_data import COACH_SCRIPT
 
-_log = logging.getLogger("unilead.coach")
+_log = logging.getLogger("Areta.coach")
 
 if TYPE_CHECKING:
     from ai_education.coach.orchestrator import AICoachOrchestrator
@@ -78,10 +78,10 @@ async def process_turn(request_data, http_request: Request, student_id: str) -> 
     orchestrator: AICoachOrchestrator = gateway.orchestrator
 
     # Resolve target competency
-    UniLead_comp_id = request_data.competency_id
-    if UniLead_comp_id is None:
-        UniLead_comp_id = ai_education_bridge.active_UniLead_competency_id(gateway)
-    mec271_comp_id = ai_education_bridge.UniLead_id_to_mec271(UniLead_comp_id)
+    Areta_comp_id = request_data.competency_id
+    if Areta_comp_id is None:
+        Areta_comp_id = ai_education_bridge.active_Areta_competency_id(gateway)
+    mec271_comp_id = ai_education_bridge.Areta_id_to_mec271(Areta_comp_id)
 
     # Resolve mode
     mode_enum = _resolve_mode(request_data.mode)
@@ -140,7 +140,7 @@ async def process_turn(request_data, http_request: Request, student_id: str) -> 
             f"Coach replied ({len(coach_message)} chars, scaffolding={scaffolding})."
         ),
         result="INFO",
-        competency_id=UniLead_comp_id,
+        competency_id=Areta_comp_id,
     )
 
     # Persist the coach turn to the DB (conversation + messages).
@@ -155,7 +155,7 @@ async def process_turn(request_data, http_request: Request, student_id: str) -> 
                 conv = crud.create_conversation(
                     db,
                     student_id=student_id,
-                    competency_id=UniLead_comp_id,
+                    competency_id=Areta_comp_id,
                     initial_mode=active_mode,
                 )
             # Save the student's message + the coach's reply.
@@ -182,7 +182,7 @@ async def process_turn(request_data, http_request: Request, student_id: str) -> 
     return CoachResponse(
         message=coach_message,
         active_mode=active_mode,
-        target_competency_id=UniLead_comp_id,
+        target_competency_id=Areta_comp_id,
         scaffolding_level=scaffolding,
         suggested_actions=suggested_actions,
         turn_index=turn_index,

@@ -1,4 +1,4 @@
-"""Shared test fixtures for the Unilead API test suite."""
+"""Shared test fixtures for the Areta API test suite."""
 
 import pytest
 

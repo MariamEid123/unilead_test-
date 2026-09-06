@@ -8,7 +8,7 @@ from ..schemas.learning import PracticeTask
 from ..services import learning_service
 
 router = APIRouter(prefix="/api/practice", tags=["practice"])
-_log = logging.getLogger("unilead.practice")
+_log = logging.getLogger("Areta.practice")
 
 
 @router.get("/{competency_id}", response_model=PracticeTask)

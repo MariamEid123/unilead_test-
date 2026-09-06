@@ -1,6 +1,6 @@
-# Contributing to Unilead
+# Contributing to Areta
 
-Thanks for contributing to Unilead. This guide covers branching, commits, and pull
+Thanks for contributing to Areta. This guide covers branching, commits, and pull
 request review standards. Following it keeps the repository history readable and
 reviews fast.
 
@@ -92,4 +92,4 @@ Rules:
   [feature request](.github/ISSUE_TEMPLATE/feature_request.md) templates.
 - Include reproduction steps, expected vs. actual behavior, and environment info.
 
-Thank you for helping build Unilead.
+Thank you for helping build Areta.

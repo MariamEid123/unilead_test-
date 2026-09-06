@@ -8,7 +8,7 @@ from ..schemas.review import ReviewRequest, ReviewResponse
 from ..services import review_service
 
 router = APIRouter(prefix="/api/review", tags=["review"])
-_log = logging.getLogger("unilead.review")
+_log = logging.getLogger("Areta.review")
 
 
 @router.post("", response_model=ReviewResponse)

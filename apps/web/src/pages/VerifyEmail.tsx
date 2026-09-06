@@ -107,7 +107,7 @@ export default function VerifyEmail() {
         <h2 className="signup__headline">One more step.</h2>
         <p className="signup__subtext muted">
           We emailed a 6-digit verification code to your university address. Enter it below to
-          activate your account — it's how we keep UniLead open to students only.
+          activate your account — it's how we keep Areta open to students only.
         </p>
       </div>
 

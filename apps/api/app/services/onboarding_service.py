@@ -6,7 +6,7 @@ import logging
 
 from .mock_data import COURSE_CODE, COURSE_TITLE
 
-_log = logging.getLogger("unilead.onboarding")
+_log = logging.getLogger("Areta.onboarding")
 
 
 def submit_onboarding(answers: dict, student_id: str) -> dict:

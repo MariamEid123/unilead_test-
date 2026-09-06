@@ -91,8 +91,8 @@ export default function DiagnosticResults() {
       )}
 
       <div className="diagnostic-results__cta">
-        <Button size="lg" onClick={() => navigate('/my-learning/learning')}>
-          Continue to Recommended Learning
+        <Button size="lg" onClick={() => navigate('/courses')}>
+          Continue to Courses
         </Button>
       </div>
     </div>

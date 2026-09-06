@@ -1,8 +1,8 @@
-# Unilead API (apps/api)
+# Areta API (apps/api)
 
-Unified FastAPI gateway for the Unilead platform. Combines:
+Unified FastAPI gateway for the Areta platform. Combines:
 
-- The **UniLead MVP** API (competencies, progress, diagnostic, learning, practice,
+- The **Areta MVP** API (competencies, progress, diagnostic, learning, practice,
   coach, review, simulation, onboarding) — original Platform backend routes
   mounted under `/api/*`.
 - The **AI Education** gateway (coach chat, evidence telemetry, simulate,

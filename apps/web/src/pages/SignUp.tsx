@@ -89,7 +89,7 @@ export default function SignUp() {
     <div className="signup">
       <div className="signup__panel">
         <div className="signup__brand">
-          <img className="signup__logo" src="/unilead-logo.svg" alt="UniLead" />
+          <img className="signup__logo" src="/unilead-logo.svg" alt="Areta" />
         </div>
         <h2 className="signup__headline">Your learning journey starts here.</h2>
         <p className="signup__subtext muted">

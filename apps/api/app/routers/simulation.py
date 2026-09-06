@@ -10,7 +10,7 @@ from ..schemas.simulation import SimulationRequest, SimulationResult
 from ..services import simulation_service
 
 router = APIRouter(prefix="/api/simulation", tags=["simulation"])
-_log = logging.getLogger("unilead.simulation")
+_log = logging.getLogger("Areta.simulation")
 
 
 @router.post("", response_model=SimulationResult)

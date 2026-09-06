@@ -10,7 +10,7 @@ from ..schemas.coach import CoachRequest, CoachResponse
 from ..services import coach_service
 
 router = APIRouter(prefix="/api/coach", tags=["coach"])
-_log = logging.getLogger("unilead.coach")
+_log = logging.getLogger("Areta.coach")
 
 
 @router.post("", response_model=CoachResponse)

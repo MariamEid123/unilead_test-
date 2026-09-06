@@ -90,7 +90,7 @@ export default function Onboarding() {
     <div className="page-narrow onboarding">
       <div className="onboarding__intro">
         <span className="onboarding__eyebrow">Personalize your path</span>
-        <h1>Make UniLead work for you.</h1>
+        <h1>Make Areta work for you.</h1>
         <p className="muted">Four quick questions help us point you to the right next step.</p>
       </div>
       <div className="onboarding__progress">

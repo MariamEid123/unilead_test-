@@ -8,7 +8,7 @@ from ..schemas.learning import LessonSection
 from ..services import learning_service
 
 router = APIRouter(prefix="/api/learning", tags=["learning"])
-_log = logging.getLogger("unilead.learning")
+_log = logging.getLogger("Areta.learning")
 
 
 @router.get("/{competency_id}", response_model=list[LessonSection])

@@ -12,7 +12,7 @@ version:
    student model reflects the run.
 6. Runs the ``MasteryDeterminationEngine`` to see if this attempt promoted
    the competency.
-7. Syncs the new state back to the UniLead ``student_state`` so
+7. Syncs the new state back to the Areta ``student_state`` so
    ``/api/competencies`` and ``/api/progress`` show fresh data.
 """
 
@@ -26,7 +26,7 @@ from fastapi import Request
 from ..schemas.simulation import SimulationResult
 from . import ai_education_bridge
 
-_log = logging.getLogger("unilead.simulation")
+_log = logging.getLogger("Areta.simulation")
 
 if TYPE_CHECKING:
     pass
@@ -79,8 +79,8 @@ def run_simulation(request_data, http_request: Request, student_id: str) -> dict
     from ai_education.robotics.telemetry import TelemetryThresholds
 
     gateway = ai_education_bridge.get_gateway(http_request, student_id)
-    UniLead_comp_id = request_data.competency_id or "pid-tuning"
-    mec271_comp_id = ai_education_bridge.UniLead_id_to_mec271(UniLead_comp_id)
+    Areta_comp_id = request_data.competency_id or "pid-tuning"
+    mec271_comp_id = ai_education_bridge.Areta_id_to_mec271(Areta_comp_id)
 
     # 1) Simulate
     step_response = _simulate(request_data.kp, request_data.ki, request_data.kd)
@@ -125,8 +125,8 @@ def run_simulation(request_data, http_request: Request, student_id: str) -> dict
             "Mastery engine failure should never break the simulation response", exc_info=True
         )
 
-    # 6) Sync state back to UniLead student_state
-    ai_education_bridge.sync_UniLead_state_from_manager(gateway)
+    # 6) Sync state back to Areta student_state
+    ai_education_bridge.sync_Areta_state_from_manager(gateway)
 
     # 6c) Count attempts (now that the evidence has been recorded) and
     # append an evidence timeline event so the Evidence Timeline UI shows it.
@@ -147,7 +147,7 @@ def run_simulation(request_data, http_request: Request, student_id: str) -> dict
             f"{'Met requirements.' if passed else 'Failed requirements.'}"
         ),
         result="PASS" if passed else "FAIL",
-        competency_id=UniLead_comp_id,
+        competency_id=Areta_comp_id,
     )
 
     # 6d) Persist the full simulation run to the DB.
@@ -159,7 +159,7 @@ def run_simulation(request_data, http_request: Request, student_id: str) -> dict
             crud.save_simulation_run(
                 db,
                 student_id=student_id,
-                competency_id=UniLead_comp_id,
+                competency_id=Areta_comp_id,
                 task_id=request_data.task_id,
                 attempt=attempt,
                 kp=request_data.kp,
@@ -195,6 +195,6 @@ def run_simulation(request_data, http_request: Request, student_id: str) -> dict
         requirements_met=passed,
         result="PASS" if passed else "FAIL",
         attempt=attempt,
-        competency_id=UniLead_comp_id,
+        competency_id=Areta_comp_id,
         misconception=misconception,
     ).model_dump()

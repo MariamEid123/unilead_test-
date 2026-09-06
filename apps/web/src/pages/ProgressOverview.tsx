@@ -61,7 +61,7 @@ export default function ProgressOverview() {
   ].filter(Boolean) as string[];
   const journeySteps = [
     { label: 'Find your starting point', done: journey.hasCompletedDiagnostic, href: '/my-learning/diagnostic' },
-    { label: 'Learn the core idea', done: journey.hasCompletedLearning, href: '/my-learning/learning' },
+    { label: 'Choose a course', done: journey.hasCompletedLearning, href: '/courses' },
     { label: 'Practice with feedback', done: journey.hasCompletedPractice, href: '/my-learning/practice' },
     { label: 'Run the simulation', done: journey.hasCompletedSimulation, href: '/apply-review/simulation' },
     { label: 'Review your evidence', done: journey.hasCompletedReview, href: '/apply-review/review' },

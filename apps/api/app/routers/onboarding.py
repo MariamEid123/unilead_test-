@@ -8,7 +8,7 @@ from ..schemas.onboarding import OnboardingAnswers, OnboardingResponse
 from ..services import onboarding_service
 
 router = APIRouter(prefix="/api/onboarding", tags=["onboarding"])
-_log = logging.getLogger("unilead.onboarding")
+_log = logging.getLogger("Areta.onboarding")
 
 
 @router.post("", response_model=OnboardingResponse)

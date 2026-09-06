@@ -1,7 +1,7 @@
 """Remediation service — uses the AI Education RemediationEngine.
 
 Builds a ``RemediationPlan`` from the student's recent failure evidence
-and translates it to the UniLead-facing schema. The plan picks one of four
+and translates it to the Areta-facing schema. The plan picks one of four
 actions based on the detected misconception (e.g. EXCESSIVE_PROPORTIONAL_GAIN
 → ADJUST_PARAMETER_STEP with a focus on reducing Kp).
 
@@ -22,7 +22,7 @@ from fastapi import HTTPException, Request
 from ..schemas.remediation import RemediationPlanResponse
 from . import ai_education_bridge
 
-_log = logging.getLogger("unilead.remediation")
+_log = logging.getLogger("Areta.remediation")
 
 
 def _persist_plan(
@@ -64,7 +64,7 @@ def build_plan(competency_id: str, http_request: Request, student_id: str) -> di
     from ai_education.remediation.strategies import get_remediation_strategy
 
     gateway = ai_education_bridge.get_gateway(http_request, student_id)
-    mec271_id = ai_education_bridge.UniLead_id_to_mec271(competency_id)
+    mec271_id = ai_education_bridge.Areta_id_to_mec271(competency_id)
     manager = gateway.student_manager
 
     # Verify this competency has failing evidence to remediate.

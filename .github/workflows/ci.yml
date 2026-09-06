@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, unilead-V-1.0.1]
+    branches: [main, Areta-V-1.0.1]
   pull_request:
     branches: [main]
 
@@ -16,13 +16,13 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_USER: unilead
-          POSTGRES_PASSWORD: unilead_ci
-          POSTGRES_DB: unilead_test
+          POSTGRES_USER: Areta
+          POSTGRES_PASSWORD: Areta_ci
+          POSTGRES_DB: Areta_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U unilead -d unilead_test"
+          --health-cmd "pg_isready -U Areta -d Areta_test"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
@@ -36,26 +36,26 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Apply migrations to PostgreSQL
         env:
-          DATABASE_URL: postgresql+psycopg://unilead:unilead_ci@localhost:5432/unilead_test
+          DATABASE_URL: postgresql+psycopg://Areta:Areta_ci@localhost:5432/Areta_test
         run: alembic upgrade head
       - name: Seed SQLite dev DB (pytest, SQLite path)
         env:
-          DATABASE_URL: sqlite:///./unilead.db
+          DATABASE_URL: sqlite:///./Areta.db
         run: python -m pytest tests/ -v --tb=short
       - name: Migrate SQLite -> PostgreSQL and verify counts
         env:
-          SOURCE_URL: sqlite:///./unilead.db
-          DEST_URL: postgresql+psycopg://unilead:unilead_ci@localhost:5432/unilead_test
+          SOURCE_URL: sqlite:///./Areta.db
+          DEST_URL: postgresql+psycopg://Areta:Areta_ci@localhost:5432/Areta_test
         run: python -m scripts.migrate
       - name: Reset PostgreSQL to a clean schema
         env:
-          DATABASE_URL: postgresql+psycopg://unilead:unilead_ci@localhost:5432/unilead_test
+          DATABASE_URL: postgresql+psycopg://Areta:Areta_ci@localhost:5432/Areta_test
         run: |
           alembic downgrade base
           alembic upgrade head
       - name: Run tests on PostgreSQL
         env:
-          DATABASE_URL: postgresql+psycopg://unilead:unilead_ci@localhost:5432/unilead_test
+          DATABASE_URL: postgresql+psycopg://Areta:Areta_ci@localhost:5432/Areta_test
         run: python -m pytest tests/ -v --tb=short
       - name: Ruff lint
         run: |

@@ -19,9 +19,9 @@ export default function MyLearning() {
           },
           {
             icon: '📚',
-            title: 'Learning',
-            description: 'Study the current lesson for your active competency.',
-            href: '/my-learning/learning',
+            title: 'Courses',
+            description: 'Choose a course and open its lectures.',
+            href: '/courses',
           },
           {
             icon: '💬',

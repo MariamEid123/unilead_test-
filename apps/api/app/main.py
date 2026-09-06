@@ -1,7 +1,7 @@
-"""Unified FastAPI entrypoint for the Unilead platform.
+"""Unified FastAPI entrypoint for the Areta platform.
 
 This single app serves both:
-  - The UniLead MVP API (competencies, progress, diagnostic, learning,
+  - The Areta MVP API (competencies, progress, diagnostic, learning,
     practice, coach, review, simulation, onboarding, **remediation,
     transfer**) — original Platform backend routes under ``/api/*``.
   - The AI Education gateway (coach chat, evidence telemetry, simulate,
@@ -12,7 +12,7 @@ configuration. The AI Education half is wired from the ai_education
 library at ``services/ai_education/`` (imported via the path bootstrap
 in ``app.config``).
 
-The UniLead services (``coach_service``, ``simulation_service``,
+The Areta services (``coach_service``, ``simulation_service``,
 ``diagnostic_service``) are wired to the same AI Education singletons
 via the ``ai_education_bridge`` module — so a coach turn or a simulation
 run on ``/api/coach`` or ``/api/simulation`` updates the same student
@@ -106,13 +106,13 @@ settings = Settings()
 manager, orchestrator, reasoning_engine, provider = build_singletons(settings)
 
 app = FastAPI(
-    title="Unilead API",
+    title="Areta API",
     description=(
-        "Unified gateway for the Unilead platform. Serves both the UniLead "
+        "Unified gateway for the Areta platform. Serves both the Areta "
         "MVP API (competencies, progress, diagnostic, learning, practice, "
         "coach, review, simulation, onboarding, remediation, transfer) and "
         "the AI Education gateway (coach chat, evidence telemetry, student "
-        "profile). The UniLead services are wired to the same AI Education "
+        "profile). The Areta services are wired to the same AI Education "
         "singletons so every endpoint shares one student model. All state "
         "is persisted to SQLite via SQLAlchemy — see the db/ package."
     ),
@@ -161,7 +161,7 @@ app.state.llm_provider = provider
 app.state.ai_education_llm_provider = provider  # alias used by manager_pool.py
 app.state.llm_settings = settings
 
-# --- UniLead MVP routes (under /api/*) --------------------------------------
+# --- Areta MVP routes (under /api/*) --------------------------------------
 app.include_router(onboarding.router)
 app.include_router(diagnostic.router)
 app.include_router(learning.router)
@@ -182,7 +182,7 @@ app.include_router(auth.router)
 
 # The legacy AI Education gateway routes (/api/ai-education/*) are still
 # available as a back-compat layer — they construct a per-request gateway
-# from the default student_id. The UniLead routes (above) are the primary
+# from the default student_id. The Areta routes (above) are the primary
 # entry points used by the frontend and now read student_id from the JWT.
 
 # Build a default student_manager so the legacy routes still work for tests
@@ -212,7 +212,7 @@ _DEFAULT_JWT_SECRETS = {
 if settings.jwt_secret in _DEFAULT_JWT_SECRETS:
     import logging
 
-    _log = logging.getLogger("unilead.main")
+    _log = logging.getLogger("Areta.main")
     if settings.enforce_jwt_secret:
         _log.critical(
             "JWT_SECRET is using a default value. Set JWT_SECRET env var to a "
@@ -232,8 +232,8 @@ def health_check() -> dict:
     """Top-level liveness probe."""
     return {
         "status": "ok",
-        "service": "unilead-api",
-        "modules": ["UniLead", "ai-education"],
+        "service": "Areta-api",
+        "modules": ["Areta", "ai-education"],
     }
 
 

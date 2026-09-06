@@ -12,7 +12,7 @@ from ..schemas.diagnostic import (
 from ..services import diagnostic_service
 
 router = APIRouter(prefix="/api/diagnostic", tags=["diagnostic"])
-_log = logging.getLogger("unilead.diagnostic")
+_log = logging.getLogger("Areta.diagnostic")
 
 
 @router.get("/questions", response_model=list[DiagnosticQuestion])

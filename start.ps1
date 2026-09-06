@@ -1,5 +1,5 @@
 # ============================================================
-#  Unilead Platform - One-Click Launcher (PowerShell version)
+#  Areta Platform - One-Click Launcher (PowerShell version)
 #  Right-click this file → "Run with PowerShell"
 #  Or: double-click start.bat (which calls this script).
 # ============================================================
@@ -17,7 +17,7 @@ $FrontendUrl  = "http://localhost:$FrontendPort"
 
 Write-Host ""
 Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "  Unilead Platform - Starting..." -ForegroundColor Cyan
+Write-Host "  Areta Platform - Starting..." -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host "  Project:  $ProjectRoot"
 Write-Host "  Backend:  $BackendUrl"

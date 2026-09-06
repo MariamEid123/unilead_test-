@@ -4,10 +4,11 @@ import './Hero.css';
 
 interface HeroProps {
   primaryHref: string;
+  primaryLabel: string;
   onExploreClick: () => void;
 }
 
-export default function Hero({ primaryHref, onExploreClick }: HeroProps) {
+export default function Hero({ primaryHref, primaryLabel, onExploreClick }: HeroProps) {
   const navigate = useNavigate();
 
   return (
@@ -20,7 +21,7 @@ export default function Hero({ primaryHref, onExploreClick }: HeroProps) {
           </p>
           <div className="hero__actions">
             <Button variant="accent" size="lg" onClick={() => navigate(primaryHref)}>
-              Start Your Learning Journey →
+              {primaryLabel} →
             </Button>
             <Button variant="ghost" size="lg" onClick={onExploreClick}>
               Explore How It Works
@@ -32,7 +33,7 @@ export default function Hero({ primaryHref, onExploreClick }: HeroProps) {
           <img
             className="hero__logo-image"
             src="/unilead-logo.svg"
-            alt="UniLead — Learn, Practice, Lead"
+            alt="Areta — Learn, Practice, Lead"
           />
         </div>
       </div>

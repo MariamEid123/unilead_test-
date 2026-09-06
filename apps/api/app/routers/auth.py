@@ -57,7 +57,7 @@ from ..services.mock_data import INITIAL_COMPETENCIES
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
-_log = logging.getLogger("unilead.auth")
+_log = logging.getLogger("Areta.auth")
 
 # --- Simple in-memory rate limiter for login (per-IP, 5 attempts / 60s) -----
 _login_attempts: dict[str, list[float]] = defaultdict(list)

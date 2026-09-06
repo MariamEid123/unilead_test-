@@ -1,4 +1,4 @@
-"""Unified configuration for the UniLead + AI Education gateway.
+"""Unified configuration for the Areta + AI Education gateway.
 
 Combines the original Platform/backend config (CORS origins, host, port)
 with the AI Education LLM provider settings (provider type, model, keys).
@@ -17,7 +17,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # so its package is importable without pip-installing it.
 _APP_DIR = Path(__file__).resolve().parent  # apps/api/app
 _API_DIR = _APP_DIR.parent  # apps/api
-_REPO_ROOT = _API_DIR.parents[1]  # unilead-unified/
+_REPO_ROOT = _API_DIR.parents[1]  # Areta-unified/
 _AI_EDUCATION_DIR = _REPO_ROOT / "services" / "ai_education"
 
 import sys  # noqa: E402
@@ -45,13 +45,13 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # --- Server (UniLead API) ---
+    # --- Server (Areta API) ---
     host: str = "0.0.0.0"
     port: int = 8000
     cors_origins: str = DEFAULT_ORIGINS
 
     # --- Database ---
-    database_url: str = "sqlite:///./unilead.db"
+    database_url: str = "sqlite:///./Areta.db"
 
     # --- Auth (JWT) ---
     jwt_secret: str = "change-me-in-production-please-use-a-long-random-string"
@@ -83,7 +83,7 @@ class Settings(BaseSettings):
     smtp_port: int = 587
     smtp_username: str = ""
     smtp_password: str = ""
-    smtp_from_email: str = "no-reply@UniLead.edu"
+    smtp_from_email: str = "no-reply@Areta.edu"
     smtp_starttls: bool = True
     verification_code_length: int = 6
     verification_code_ttl_minutes: int = 15

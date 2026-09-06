@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field
 class TransferScenarioResponse(BaseModel):
     """A transfer challenge presented to the student."""
 
-    competency_id: str = Field(..., description="UniLead competency id being transferred.")
+    competency_id: str = Field(..., description="Areta competency id being transferred.")
     scenario_id: str = Field(..., description="Identifier of the transfer scenario.")
     title: str = Field(..., description="Human-readable scenario title.")
     domain: str = Field(..., description="Domain label (e.g. 'thermal', 'fluid', 'aerospace').")

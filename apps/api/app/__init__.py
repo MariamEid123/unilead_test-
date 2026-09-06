@@ -1,4 +1,4 @@
-"""Unilead API application package.
+"""Areta API application package.
 
 Importing this package registers the ``services/ai_education`` library on
 ``sys.path`` so it is importable without pip-installing it. Doing this in

@@ -45,15 +45,13 @@ function PersonalizedContent({
   recommendation: Recommendation;
 }) {
   const navigate = useNavigate();
-  const currentCompetency =
-    student.competencies.find((c) => c.status === 'DEVELOPING') ?? student.competencies[0]!;
 
   return (
     <Card padding="lg" className="personalized__card">
       <div className="personalized__top">
         <div>
           <span className="personalized__course-code">Welcome back, {student.name}</span>
-          <h3 className="personalized__course-title">Resume: {recommendation.title}</h3>
+          <h3 className="personalized__course-title">{recommendation.title}</h3>
         </div>
         <div className="personalized__progress-figure">
           <span className="personalized__progress-number">{student.overallProgress}%</span>
@@ -65,8 +63,8 @@ function PersonalizedContent({
 
       <div className="personalized__grid">
         <div className="personalized__field">
-          <span className="personalized__field-label">Current module</span>
-          <span className="personalized__field-value">{currentCompetency.name}</span>
+          <span className="personalized__field-label">Available courses</span>
+          <span className="personalized__field-value">Physics Fundamentals · Math Zero: Foundations</span>
         </div>
         <div className="personalized__field">
           <span className="personalized__field-label">Next step</span>
@@ -80,7 +78,7 @@ function PersonalizedContent({
       </p>
 
       <Button size="lg" onClick={() => navigate(recommendation.href)}>
-        Resume Now →
+        {recommendation.title} →
       </Button>
     </Card>
   );

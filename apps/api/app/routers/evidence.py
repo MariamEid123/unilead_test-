@@ -14,7 +14,7 @@ from ..schemas.instructor import EvidenceEvent
 from ..services import evidence_service
 
 router = APIRouter(prefix="/api/evidence", tags=["evidence"])
-_log = logging.getLogger("unilead.evidence")
+_log = logging.getLogger("Areta.evidence")
 
 
 @router.get("/me/timeline", response_model=list[EvidenceEvent])

@@ -89,7 +89,7 @@ export default function ResetPassword() {
   return (
     <div className="signup">
       <div className="signup__panel">
-        <div className="signup__brand"><img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /></div>
+        <div className="signup__brand"><img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> Areta</div>
         <h2 className="signup__headline">A fresh start.</h2>
         <p className="signup__subtext muted">Choose a strong password and get back to your learning journey.</p>
       </div>

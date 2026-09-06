@@ -15,13 +15,11 @@ import type {
   DiagnosticQuestion,
   DiagnosticAnswer,
   DiagnosticResult,
-  Recommendation,
   LessonSection,
   PracticeTask,
   OnboardingAnswers,
   SimulationResult,
   ReviewData,
-  JourneyFlags,
   CompetencyStatus,
   Competency,
   CoachMode,
@@ -376,64 +374,6 @@ export async function submitTransferResponse(
     minRequired: r.min_required,
     feedback: r.feedback,
   };
-}
-
-// ---- Recommendation ------------------------------------------------------
-
-// Derives what the student should do next based purely on client-side
-// journey progress (which page they've completed) — this is UI navigation
-// state, not mastery data, so it's kept here rather than in the backend.
-export async function getRecommendation(
-  flags: JourneyFlags,
-  activeCompetencyName: string
-): Promise<Recommendation> {
-  let rec: Recommendation;
-
-  if (!flags.hasCompletedDiagnostic) {
-    rec = {
-      id: 'rec-diagnostic',
-      title: 'Start Diagnostic',
-      reason: "Let's find out where you're already strong and where to focus first.",
-      href: '/my-learning/diagnostic',
-    };
-  } else if (!flags.hasCompletedLearning) {
-    rec = {
-      id: 'rec-learning',
-      title: 'Start Learning',
-      reason: `Begin the ${activeCompetencyName} lesson to build your foundation.`,
-      href: '/my-learning/learning',
-    };
-  } else if (!flags.hasCompletedPractice) {
-    rec = {
-      id: 'rec-practice',
-      title: `Practice ${activeCompetencyName}`,
-      reason: 'Apply what you just learned to a real task.',
-      href: '/my-learning/practice',
-    };
-  } else if (!flags.hasCompletedSimulation) {
-    rec = {
-      id: 'rec-simulation',
-      title: 'Launch Simulation',
-      reason: 'See how your controller performs against the plant model.',
-      href: '/apply-review/simulation',
-    };
-  } else if (!flags.hasCompletedReview) {
-    rec = {
-      id: 'rec-review',
-      title: 'Review Your Evidence',
-      reason: "See what you've demonstrated so far and what's still missing.",
-      href: '/apply-review/review',
-    };
-  } else {
-    rec = {
-      id: 'rec-progress',
-      title: 'View Your Progress',
-      reason: 'Check your updated competency status.',
-      href: '/progress/competency-profile',
-    };
-  }
-
-  return rec;
 }
 
 // ---- Instructor (NEW) -----------------------------------------------------

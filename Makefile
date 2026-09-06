@@ -1,4 +1,4 @@
-# Cross-platform task runner for Unilead
+# Cross-platform task runner for Areta
 # Usage: make <target>
 
 .PHONY: help install dev test lint format build clean docker-up docker-down

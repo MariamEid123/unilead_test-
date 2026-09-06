@@ -12,9 +12,12 @@ import DesignPreview from './pages/DesignPreview';
 import Onboarding from './pages/Onboarding';
 import Home from './pages/Home';
 import MyLearning from './pages/MyLearning';
+import Courses from './pages/Courses';
+import Plans from './pages/Plans';
+import CourseDetail from './pages/CourseDetail';
+import Lecture from './pages/Lecture';
 import Diagnostic from './pages/Diagnostic';
 import DiagnosticResults from './pages/DiagnosticResults';
-import Learning from './pages/Learning';
 import AICoach from './pages/AICoach';
 import Practice from './pages/Practice';
 import Assignment from './pages/Assignment';
@@ -63,9 +66,15 @@ export default function App() {
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
 
         <Route path="/my-learning" element={<ProtectedRoute><MyLearning /></ProtectedRoute>} />
+        <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
+        <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
+        <Route path="/courses/:courseId" element={<ProtectedRoute><CourseDetail /></ProtectedRoute>} />
+        <Route path="/courses/:courseId/lectures/:lectureId" element={<ProtectedRoute><Lecture /></ProtectedRoute>} />
+        <Route path="/courses/:courseId/:section" element={<ProtectedRoute><CourseDetail /></ProtectedRoute>} />
+        <Route path="/courses/:courseId/simulation" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />
+        <Route path="/courses/:courseId/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
         <Route path="/my-learning/diagnostic" element={<ProtectedRoute><Diagnostic /></ProtectedRoute>} />
         <Route path="/my-learning/diagnostic-results" element={<ProtectedRoute><DiagnosticResults /></ProtectedRoute>} />
-        <Route path="/my-learning/learning" element={<ProtectedRoute><Learning /></ProtectedRoute>} />
         <Route path="/my-learning/ai-coach" element={<ProtectedRoute><AICoach /></ProtectedRoute>} />
         <Route path="/my-learning/practice" element={<ProtectedRoute><Practice /></ProtectedRoute>} />
         <Route path="/my-learning/assignment" element={<ProtectedRoute><Assignment /></ProtectedRoute>} />

@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { LoadingState, ErrorState } from '../components/ui/StateViews';
 import { useApp } from '../state/AppContext';
 import { runSimulation } from '../data/mockApi';
+import { getCourseById } from '../data/courses';
 import type { SimulationResult } from '../types';
 import './Simulation.css';
 
@@ -22,6 +24,8 @@ const REQUIREMENTS = [
 
 export default function Simulation() {
   const navigate = useNavigate();
+  const { courseId } = useParams();
+  const course = courseId ? getCourseById(courseId) : undefined;
   const { student, markSimulationComplete } = useApp();
   const [phase, setPhase] = useState<Phase>('ready');
   const [result, setResult] = useState<SimulationResult | null>(null);
@@ -55,7 +59,7 @@ export default function Simulation() {
 
   function handleContinue() {
     markSimulationComplete();
-    navigate('/apply-review/review');
+    navigate(courseId ? `/courses/${courseId}/review` : '/apply-review/review');
   }
 
   // Helper: did the latest run meet each individual requirement?
@@ -70,13 +74,12 @@ export default function Simulation() {
 
   return (
     <div className="page-narrow simulation">
-      <button className="simulation__back" type="button" onClick={() => navigate('/my-learning/practice')}>← Back</button>
-      <div className="simulation__eyebrow">Apply & Review</div>
-      <h1 className="simulation__title">PID Simulation</h1>
+      <button className="simulation__back" type="button" onClick={() => navigate(courseId ? `/courses/${courseId}/simulation` : '/courses')}>← Back to {course?.title ?? 'Courses'}</button>
+      <div className="simulation__eyebrow">{course?.title ?? 'Simulation'}</div>
+      <h1 className="simulation__title">{course?.title ?? 'Course'} Simulation</h1>
       <p className="muted simulation__subtitle">
-        Tune your controller for <strong>{activeCompetency?.name ?? 'PID Tuning'}</strong> and run it
-        against the plant model. The simulator measures overshoot, settling time, rise time, and
-        steady-state error — objectively, with no AI in the loop.
+        Explore how your choices affect the course scenario. The simulator measures overshoot,
+        settling time, rise time, and steady-state error objectively.
       </p>
 
       {/* NEW: Plant diagram showing the feedback loop. */}

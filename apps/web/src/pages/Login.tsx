@@ -18,8 +18,8 @@ export default function Login() {
   const [errors, setErrors] = useState<{ email?: string; password?: string; form?: string }>({});
   const [loading, setLoading] = useState(false);
   const successMessage = (location.state as { message?: string } | null)?.message;
-  const sessionMessage = sessionStorage.getItem('unilead_auth_message');
-  if (sessionMessage) sessionStorage.removeItem('unilead_auth_message');
+  const sessionMessage = sessionStorage.getItem('Areta_auth_message');
+  if (sessionMessage) sessionStorage.removeItem('Areta_auth_message');
 
   function validate() {
     const next: typeof errors = {};
@@ -63,7 +63,7 @@ export default function Login() {
     <div className="signup">
       <div className="signup__panel">
         <div className="signup__brand">
-          <img className="signup__brand-mark" src="/unilead-mark.svg" alt="" /> 
+          <img className="signup__brand-mark" src="/unilead-mark.svg" alt="" />
         </div>
         <h2 className="signup__headline">Welcome back.</h2>
         <p className="signup__subtext muted">

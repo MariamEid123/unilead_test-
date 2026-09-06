@@ -1,4 +1,4 @@
-"""CRUD operations for the Unilead platform.
+"""CRUD operations for the Areta platform.
 
 Each function takes a SQLAlchemy ``Session`` as the first argument so
 callers control transaction boundaries. Functions don't commit — the

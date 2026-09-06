@@ -14,7 +14,7 @@ from ..schemas.transfer import (
 from ..services import transfer_service
 
 router = APIRouter(prefix="/api/transfer", tags=["transfer"])
-_log = logging.getLogger("unilead.transfer")
+_log = logging.getLogger("Areta.transfer")
 
 
 @router.get("/{competency_id}", response_model=TransferScenarioResponse)

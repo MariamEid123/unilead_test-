@@ -8,7 +8,7 @@ from ..schemas.progress import ProgressResponse
 from ..services import progress_service
 
 router = APIRouter(prefix="/api/progress", tags=["progress"])
-_log = logging.getLogger("unilead.progress")
+_log = logging.getLogger("Areta.progress")
 
 
 @router.get("", response_model=ProgressResponse)

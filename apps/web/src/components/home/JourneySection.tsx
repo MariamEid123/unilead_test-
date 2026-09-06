@@ -4,7 +4,7 @@ import './JourneySection.css';
 
 const STEPS = [
   { number: '01', label: 'Diagnostic', description: 'Find your starting point.', href: '/my-learning/diagnostic' },
-  { number: '02', label: 'Learn', description: 'Build the core idea.', href: '/my-learning/learning' },
+  { number: '02', label: 'Courses', description: 'Choose a course and build the core idea.', href: '/courses' },
   { number: '03', label: 'Coach', description: 'Work through the hard part.', href: '/my-learning/ai-coach' },
   { number: '04', label: 'Practice', description: 'Apply it with feedback.', href: '/my-learning/practice' },
   { number: '05', label: 'Apply', description: 'Test it in a new context.', href: '/apply-review/simulation' },

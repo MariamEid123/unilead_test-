@@ -26,7 +26,7 @@ interface AppState {
 
 const AppContext = createContext<AppState | undefined>(undefined);
 
-const SESSION_KEY = 'unilead_session';
+const SESSION_KEY = 'Areta_session';
 
 function loadSession(): AuthSession | null {
   try {

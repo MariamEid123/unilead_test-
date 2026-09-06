@@ -10,7 +10,7 @@ from ..schemas.remediation import RemediationPlanResponse
 from ..services import remediation_service
 
 router = APIRouter(prefix="/api/remediation", tags=["remediation"])
-_log = logging.getLogger("unilead.remediation")
+_log = logging.getLogger("Areta.remediation")
 
 
 @router.get("/{competency_id}", response_model=RemediationPlanResponse)

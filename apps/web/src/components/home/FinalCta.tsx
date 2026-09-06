@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import './FinalCta.css';
 
-export default function FinalCta({ href }: { href: string }) {
+export default function FinalCta({ href, label }: { href: string; label: string }) {
   const navigate = useNavigate();
 
   return (
@@ -11,7 +11,7 @@ export default function FinalCta({ href }: { href: string }) {
         <h2 className="final-cta__title">Ready to Build Real Competencies?</h2>
         <p className="final-cta__subtext">Learn, practice, apply, and prove.</p>
         <Button size="lg" onClick={() => navigate(href)}>
-          Start Learning →
+          {label} →
         </Button>
       </div>
     </section>

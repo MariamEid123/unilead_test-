@@ -4,12 +4,12 @@ The destination schema must already exist — run ``alembic upgrade head``
 against the destination first::
 
     # 1. Create/migrate the destination schema
-    DEST_URL=postgresql+psycopg://unilead:pass@localhost:5432/unilead \
+    DEST_URL=postgresql+psycopg://Areta:pass@localhost:5432/Areta \
         alembic upgrade head
 
     # 2. Copy every row, preserving primary and foreign keys
-    SOURCE_URL=sqlite:///./unilead.db \\
-    DEST_URL=postgresql+psycopg://unilead:pass@localhost:5432/unilead \\
+    SOURCE_URL=sqlite:///./Areta.db \\
+    DEST_URL=postgresql+psycopg://Areta:pass@localhost:5432/Areta \\
         python -m scripts.migrate
 
 The script:

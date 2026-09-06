@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { StatusBadge } from '../components/ui/Badge';
 import { LoadingState, ErrorState } from '../components/ui/StateViews';
 import { useApp } from '../state/AppContext';
 import { getReview, getStudent, completeReview } from '../data/mockApi';
+import { getCourseById } from '../data/courses';
 import type { AsyncState, ReviewData } from '../types';
 import './Review.css';
 
 export default function Review() {
   const navigate = useNavigate();
+  const { courseId } = useParams();
+  const course = courseId ? getCourseById(courseId) : undefined;
   const { student, setStudent, markReviewComplete } = useApp();
   const [state, setState] = useState<AsyncState<ReviewData>>({ status: 'loading' });
   const [continuing, setContinuing] = useState(false);
@@ -69,9 +73,9 @@ export default function Review() {
 
   return (
     <div className="page-narrow review">
-      <button className="review__back" type="button" onClick={() => navigate('/apply-review/simulation')}>← Back</button>
-      <div className="review__eyebrow">Apply & Review</div>
-      <h1 className="review__title">Your Evidence</h1>
+      <button className="review__back" type="button" onClick={() => navigate(courseId ? `/courses/${courseId}/review` : '/courses')}>← Back to {course?.title ?? 'Courses'}</button>
+      <div className="review__eyebrow">{course?.title ?? 'Review'}</div>
+      <h1 className="review__title">Your {course?.title ?? 'Course'} Evidence</h1>
       <p className="muted review__subtitle">
         Instead of a single score, here's what you've actually demonstrated for{' '}
         <strong>{review.competencyName}</strong>.

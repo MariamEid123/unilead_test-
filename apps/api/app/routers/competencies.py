@@ -8,7 +8,7 @@ from ..schemas.common import Competency
 from ..services import progress_service
 
 router = APIRouter(prefix="/api/competencies", tags=["competencies"])
-_log = logging.getLogger("unilead.competencies")
+_log = logging.getLogger("Areta.competencies")
 
 
 @router.get("", response_model=list[Competency])

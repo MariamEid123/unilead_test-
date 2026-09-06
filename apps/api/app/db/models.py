@@ -1,4 +1,4 @@
-"""SQLAlchemy ORM models for the Unilead platform.
+"""SQLAlchemy ORM models for the Areta platform.
 
 Schema overview:
 

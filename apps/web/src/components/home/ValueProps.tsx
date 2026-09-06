@@ -5,9 +5,9 @@ import './ValueProps.css';
 const ITEMS = [
   {
     icon: '📚',
-    title: 'Learn',
-    description: 'Personalized learning experiences that focus on what you need to improve.',
-    href: '/my-learning/learning',
+    title: 'Courses',
+    description: 'Explore focused courses that build strong foundations step by step.',
+    href: '/courses',
   },
   {
     icon: '💬',

@@ -15,7 +15,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 # Mirrors ai_education.domain.enums.CoachMode — duplicated here so the
-# UniLead schema layer doesn't need to import the engine package.
+# Areta schema layer doesn't need to import the engine package.
 CoachModeLiteral = Literal["LEARN", "HINT", "PRACTICE", "REFLECT", "REMEDIATE", "TRANSFER"]
 
 
@@ -36,7 +36,7 @@ class CoachRequest(BaseModel):
         default=None,
         max_length=64,
         description=(
-            "Optional UniLead competency id (e.g. 'pid-reasoning'). If "
+            "Optional Areta competency id (e.g. 'pid-reasoning'). If "
             "omitted, the manager's current target competency is used."
         ),
     )
@@ -49,7 +49,7 @@ class CoachResponse(BaseModel):
     active_mode: CoachModeLiteral = Field(..., description="The mode that handled this turn.")
     target_competency_id: str | None = Field(
         default=None,
-        description="UniLead competency id the coach is currently targeting.",
+        description="Areta competency id the coach is currently targeting.",
     )
     scaffolding_level: str | None = Field(
         default=None,

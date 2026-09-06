@@ -4,7 +4,7 @@ Revision ID: 0001
 Revises:
 Create Date: 2026-09-03
 
-Creates all Unilead tables matching the current SQLAlchemy models in
+Creates all Areta tables matching the current SQLAlchemy models in
 ``apps/api/app/db/models.py``. This is the production baseline used by
 PostgreSQL. Run with::
 

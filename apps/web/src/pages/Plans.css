@@ -1,0 +1,103 @@
+.plans {
+  padding-bottom: var(--space-8);
+}
+
+.plans__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.plan-card {
+  position: relative;
+  display: flex;
+  min-height: 430px;
+  flex-direction: column;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.plan-card--featured {
+  border-color: var(--color-primary);
+  box-shadow: 0 12px 30px rgba(124, 58, 237, 0.14);
+}
+
+.plan-card__badge {
+  position: absolute;
+  top: 0;
+  right: var(--space-5);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-surface);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.plan-card__heading h2 {
+  font-size: var(--fs-2xl);
+}
+
+.plan-card__heading p {
+  min-height: 50px;
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.plan-card__detail {
+  margin-top: var(--space-5);
+  color: var(--color-primary);
+  font-size: var(--fs-lg);
+  font-weight: 800;
+}
+
+.plan-card:not(.plan-card--featured) .plan-card__detail {
+  color: var(--color-text-faint);
+}
+
+.plan-card__features {
+  display: flex;
+  min-height: 144px;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 var(--space-6);
+  padding: var(--space-5) 0 0;
+  border-top: 1px solid var(--color-border);
+  list-style: none;
+}
+
+.plan-card__features li {
+  display: flex;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.plan-card__features li span {
+  color: var(--color-success);
+  font-weight: 800;
+}
+
+.plan-card__features:empty {
+  border-top-color: transparent;
+}
+
+.plan-card .btn {
+  margin-top: auto;
+}
+
+@media (max-width: 860px) {
+  .plans__grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

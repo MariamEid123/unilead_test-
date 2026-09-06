@@ -1,4 +1,4 @@
-# Unilead API (apps/api) - Python dependencies
+# Areta API (apps/api) - Python dependencies
 
 # Web framework
 fastapi==0.139.1

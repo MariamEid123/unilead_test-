@@ -2,14 +2,14 @@
 // Every page-facing function in mockApi.ts goes through this — it's the
 // only place that knows about HTTP, base URLs, or error shapes.
 //
-// Auth: if a JWT is stored in localStorage (under ``unilead_token``), it's
+// Auth: if a JWT is stored in localStorage (under ``Areta_token``), it's
 // automatically attached to every request via the Authorization header.
 // On 401 Unauthorized the token is cleared and the user is redirected
 // to the login page so expired sessions don't silently fail.
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000/api';
 
-const TOKEN_KEY = 'unilead_token';
+const TOKEN_KEY = 'Areta_token';
 
 export function getAuthToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
@@ -39,7 +39,7 @@ function buildHeaders(extra?: HeadersInit, includeAuth = true): HeadersInit {
 
 function redirectToLogin(): void {
   clearAuthToken();
-  sessionStorage.setItem('unilead_auth_message', 'Your session expired — please log in again.');
+  sessionStorage.setItem('Areta_auth_message', 'Your session expired — please log in again.');
   // Already on the login page? Just surface the error in-place — no reload.
   if (window.location.pathname === '/login') return;
   window.location.href = '/login';

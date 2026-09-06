@@ -26,7 +26,7 @@ from secrets import randbelow
 
 from ..config import Settings
 
-_log = logging.getLogger("unilead.verification")
+_log = logging.getLogger("Areta.verification")
 
 _settings = Settings()
 
@@ -73,16 +73,16 @@ def _send_via_log(email: str, code: str) -> None:
 
 def _send_via_smtp(email: str, code: str) -> None:
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = "Your Unilead verification code"
+    msg["Subject"] = "Your Areta verification code"
     msg["From"] = _settings.smtp_from_email
     msg["To"] = email
     text = (
-        f"Your Unilead verification code is {code}.\n\n"
+        f"Your Areta verification code is {code}.\n\n"
         f"It expires in {_settings.verification_code_ttl_minutes} minutes.\n"
         "If you didn't create an account, you can ignore this email.\n"
     )
     html = (
-        "<html><body><p>Your Unilead verification code is</p>"
+        "<html><body><p>Your Areta verification code is</p>"
         f"<p style='font-size:28px;letter-spacing:6px;font-weight:bold'>{code}</p>"
         f"<p>It expires in {_settings.verification_code_ttl_minutes} minutes.</p>"
         "<p>If you didn't create an account, you can ignore this email.</p>"

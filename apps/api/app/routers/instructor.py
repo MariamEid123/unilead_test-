@@ -22,7 +22,7 @@ from ..schemas.instructor import (
 from ..services import instructor_service
 
 router = APIRouter(prefix="/api/instructor", tags=["instructor"])
-_log = logging.getLogger("unilead.instructor")
+_log = logging.getLogger("Areta.instructor")
 
 
 @router.get("/summary", response_model=InstructorClassSummary)

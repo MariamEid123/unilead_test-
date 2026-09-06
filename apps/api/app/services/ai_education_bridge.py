@@ -1,15 +1,15 @@
-"""Bridge between the UniLead MVP state and the AI Education engine.
+"""Bridge between the Areta MVP state and the AI Education engine.
 
-The UniLead MVP (originally Platform/backend) keeps its student state in
+The Areta MVP (originally Platform/backend) keeps its student state in
 ``student_state.py`` as a plain Python dict, with competency IDs like
 ``"feedback-fundamentals"``. The AI Education engine (``services/ai_education``)
 keeps its own state in a ``StudentModelManager`` (Pydantic), with competency
 IDs like ``"MEC271-FB"``. The two state stores must be kept in sync so the
-existing UniLead routes (``/api/competencies``, ``/api/progress``) reflect
+existing Areta routes (``/api/competencies``, ``/api/progress``) reflect
 what the AI Education engines actually do.
 
 This module is the only place that knows about both worlds. Everything else
-in ``services/`` talks to either UniLead state or the AI Education gateway —
+in ``services/`` talks to either Areta state or the AI Education gateway —
 never both.
 """
 
@@ -23,42 +23,42 @@ from fastapi import Request
 
 from .mock_data import INITIAL_COMPETENCIES
 
-_log = logging.getLogger("unilead.ai_education_bridge")
+_log = logging.getLogger("Areta.ai_education_bridge")
 
 if TYPE_CHECKING:
     from ai_education.api.router import APIGateway
 
 # --- Competency ID mapping ------------------------------------------------
-# UniLead IDs (kebab-case, frontend-facing) ↔ MEC271 node IDs (AI Education).
-UniLead_TO_MEC271: dict[str, str] = {
+# Areta IDs (kebab-case, frontend-facing) ↔ MEC271 node IDs (AI Education).
+Areta_TO_MEC271: dict[str, str] = {
     "feedback-fundamentals": "MEC271-FB",
     "pid-fundamentals": "MEC271-PID-FUND",
     "pid-reasoning": "MEC271-PID-REASON",
     "pid-tuning": "MEC271-PID-TUNE",
     "response-analysis": "MEC271-RESP-ANALYSIS",
 }
-MEC271_TO_UniLead: dict[str, str] = {v: k for k, v in UniLead_TO_MEC271.items()}
+MEC271_TO_Areta: dict[str, str] = {v: k for k, v in Areta_TO_MEC271.items()}
 
 # --- Status mapping -------------------------------------------------------
-# AI Education CompetencyState (UPPERCASE) ↔ UniLead status (lowercase).
-# UniLead has one extra status ("needs_practice") that AI Education treats as
+# AI Education CompetencyState (UPPERCASE) ↔ Areta status (lowercase).
+# Areta has one extra status ("needs_practice") that AI Education treats as
 # "developing with a high failure rate" — we synthesise it from the reasoning
 # engine's consecutive-failure count.
-STATE_TO_UniLead = {
+STATE_TO_Areta = {
     "NOT_DEMONSTRATED": "not_started",
     "DEVELOPING": "developing",
     "DEMONSTRATED": "demonstrated",
-    "MASTERED": "demonstrated",  # UniLead has no "mastered" — collapse to demonstrated
+    "MASTERED": "demonstrated",  # Areta has no "mastered" — collapse to demonstrated
 }
 
 # --- Public helpers -------------------------------------------------------
 
-_KNOWN_UniLead_IDS = set(UniLead_TO_MEC271.keys())
+_KNOWN_Areta_IDS = set(Areta_TO_MEC271.keys())
 
 
-def is_valid_competency_id(UniLead_id: str) -> bool:
-    """Check whether a competency_id is a known UniLead competency."""
-    return UniLead_id in _KNOWN_UniLead_IDS
+def is_valid_competency_id(Areta_id: str) -> bool:
+    """Check whether a competency_id is a known Areta competency."""
+    return Areta_id in _KNOWN_Areta_IDS
 
 
 def get_gateway(request: Request, student_id: str | None = None) -> APIGateway:
@@ -66,7 +66,7 @@ def get_gateway(request: Request, student_id: str | None = None) -> APIGateway:
 
     If ``student_id`` is None, falls back to the legacy default gateway on
     ``app.state.ai_education_gateway`` (used by the legacy /api/ai-education/*
-    routes). For UniLead routes, the caller should pass the current user's
+    routes). For Areta routes, the caller should pass the current user's
     student_id, which resolves a per-student gateway from the pool.
     """
     if student_id is None:
@@ -87,31 +87,31 @@ def get_gateway(request: Request, student_id: str | None = None) -> APIGateway:
     return get_or_create_gateway(request, student_id)
 
 
-def UniLead_id_to_mec271(UniLead_id: str) -> str:
-    """Translate a UniLead competency id to its MEC271 node id."""
-    return UniLead_TO_MEC271.get(UniLead_id, UniLead_id)
+def Areta_id_to_mec271(Areta_id: str) -> str:
+    """Translate a Areta competency id to its MEC271 node id."""
+    return Areta_TO_MEC271.get(Areta_id, Areta_id)
 
 
-def mec271_id_to_UniLead(mec271_id: str) -> str:
-    """Translate an MEC271 node id back to its UniLead id."""
-    return MEC271_TO_UniLead.get(mec271_id, mec271_id)
+def mec271_id_to_Areta(mec271_id: str) -> str:
+    """Translate an MEC271 node id back to its Areta id."""
+    return MEC271_TO_Areta.get(mec271_id, mec271_id)
 
 
-def UniLead_status_from_manager(UniLead_id: str, gateway: APIGateway) -> str:
-    """Look up the current UniLead status for ``UniLead_id`` based on the
+def Areta_status_from_manager(Areta_id: str, gateway: APIGateway) -> str:
+    """Look up the current Areta status for ``Areta_id`` based on the
     AI Education manager's profile, deriving ``needs_practice`` from the
     reasoning engine's consecutive-failure count.
     """
-    mec271_id = UniLead_id_to_mec271(UniLead_id)
+    mec271_id = Areta_id_to_mec271(Areta_id)
     manager = gateway.student_manager
     record = manager.profile.competencies.get(mec271_id)
     if record is None:
         return "not_started"
 
     state_name = record.state.name  # e.g. "DEVELOPING"
-    base = STATE_TO_UniLead.get(state_name, "not_started")
+    base = STATE_TO_Areta.get(state_name, "not_started")
 
-    # "needs_practice" is a UniLead-only concept: ≥2 consecutive failures on
+    # "needs_practice" is a Areta-only concept: ≥2 consecutive failures on
     # a competency that's still developing.
     if base == "developing":
         from ai_education.reasoning.engine import EvidenceReasoningEngine
@@ -128,12 +128,12 @@ def UniLead_status_from_manager(UniLead_id: str, gateway: APIGateway) -> str:
     return base
 
 
-def UniLead_progress_from_manager(UniLead_id: str, gateway: APIGateway) -> int:
+def Areta_progress_from_manager(Areta_id: str, gateway: APIGateway) -> int:
     """Derive a 0-100 progress number from the AI Education record state and
-    evidence history. Used to refresh the UniLead ``student_state`` after a
+    evidence history. Used to refresh the Areta ``student_state`` after a
     simulation or transfer event.
     """
-    mec271_id = UniLead_id_to_mec271(UniLead_id)
+    mec271_id = Areta_id_to_mec271(Areta_id)
     manager = gateway.student_manager
     record = manager.profile.competencies.get(mec271_id)
     if record is None:
@@ -156,8 +156,8 @@ def UniLead_progress_from_manager(UniLead_id: str, gateway: APIGateway) -> int:
     return 0
 
 
-def sync_UniLead_state_from_manager(gateway: APIGateway, student_id: str | None = None) -> None:
-    """Refresh the UniLead ``student_state`` (DB-backed) from the AI
+def sync_Areta_state_from_manager(gateway: APIGateway, student_id: str | None = None) -> None:
+    """Refresh the Areta ``student_state`` (DB-backed) from the AI
     Education manager. Call this after every event that mutates the manager
     (simulation run, transfer evaluation, diagnostic submission).
 
@@ -177,7 +177,7 @@ def sync_UniLead_state_from_manager(gateway: APIGateway, student_id: str | None 
                 return
             total_progress = 0
             for c in competencies:
-                mec271_id = UniLead_id_to_mec271(c.competency_id)
+                mec271_id = Areta_id_to_mec271(c.competency_id)
                 record = gateway.student_manager.profile.competencies.get(mec271_id)
                 if record is None:
                     total_progress += c.progress
@@ -186,8 +186,8 @@ def sync_UniLead_state_from_manager(gateway: APIGateway, student_id: str | None 
                 # diagnostic engine has already placed (state != NOT_DEMONSTRATED).
                 # Otherwise untouched competencies keep their seed values.
                 if record.evidence_history or record.state is not CompetencyState.NOT_DEMONSTRATED:
-                    new_status = UniLead_status_from_manager(c.competency_id, gateway)
-                    new_progress = UniLead_progress_from_manager(c.competency_id, gateway)
+                    new_status = Areta_status_from_manager(c.competency_id, gateway)
+                    new_progress = Areta_progress_from_manager(c.competency_id, gateway)
                     crud.upsert_competency(
                         db,
                         student_id=student_id,
@@ -206,18 +206,18 @@ def sync_UniLead_state_from_manager(gateway: APIGateway, student_id: str | None 
         finally:
             db.close()
     except Exception:
-        _log.warning("sync_UniLead_state failed", exc_info=True)
+        _log.warning("sync_Areta_state failed", exc_info=True)
 
 
-def active_UniLead_competency_id(gateway: APIGateway) -> str:
-    """Return the UniLead competency id the AI Education manager is currently
-    targeting. Falls back to the first non-demonstrated UniLead competency
+def active_Areta_competency_id(gateway: APIGateway) -> str:
+    """Return the Areta competency id the AI Education manager is currently
+    targeting. Falls back to the first non-demonstrated Areta competency
     if the manager doesn't have a target.
     """
     try:
         target_node = gateway.student_manager.get_next_target_competency()
         if target_node is not None:
-            return mec271_id_to_UniLead(target_node.id)
+            return mec271_id_to_Areta(target_node.id)
     except Exception:
         pass
     # Fall back to the first competency with status not "demonstrated"

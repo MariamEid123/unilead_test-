@@ -71,7 +71,7 @@ def create_access_token(
         "sub": subject,
         "exp": expire,
         "iat": datetime.now(UTC),
-        "iss": "unilead-api",
+        "iss": "Areta-api",
         "jti": uuid.uuid4().hex,
     }
     return jwt.encode(payload, _settings.jwt_secret, algorithm=_settings.jwt_algorithm)
@@ -86,7 +86,7 @@ def decode_access_token(token: str) -> str | None:
             algorithms=[_settings.jwt_algorithm],
             options={"require": ["sub", "exp", "iss", "iat", "jti"]},
         )
-        if payload.get("iss") != "unilead-api":
+        if payload.get("iss") != "Areta-api":
             return None
         return payload.get("sub")
     except JWTError:
