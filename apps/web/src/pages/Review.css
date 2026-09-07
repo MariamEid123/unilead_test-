@@ -1,90 +1,261 @@
 .review {
-  padding-top: var(--space-6);
+  max-width: 780px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-8);
+}
+
+.review__back {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 150ms ease;
+}
+
+.review__back:hover {
+  color: var(--color-primary);
+}
+
+.review__header {
+  margin-bottom: var(--space-6);
 }
 
 .review__eyebrow {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+.review__title {
+  font-size: var(--fs-3xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin: 0 0 var(--space-2);
+}
+
+.review__subtitle {
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Card General */
+.review__card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.review__card-header h2 {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.review__badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.review__badge--success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.review__badge--warning {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.review__badge--accent {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.review__box-subtext {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+/* 1. Your Progress Card */
+.review__progress-card {
+  margin-bottom: var(--space-6);
+}
+
+.review__progress-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.review__progress-number {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-primary);
+  letter-spacing: -0.03em;
+}
+
+.review__progress-bar-wrap {
+  width: 100%;
+}
+
+.review__progress-explanation {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-left: 3px solid var(--color-primary);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 0;
+}
+
+/* 2. Topics Grid */
+.review__topics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.review__topic-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.review__topic-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.review__topic-item--well {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.review__topic-item--practice {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.review__topic-icon {
+  font-weight: 800;
+  font-size: var(--fs-xs);
+  flex-shrink: 0;
+}
+
+/* 3. Your Activity Card */
+.review__activity-card {
+  margin-bottom: var(--space-6);
+}
+
+.review__activity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.review__activity-item {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.review__activity-label {
   font-size: var(--fs-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-primary);
-  margin-bottom: 4px;
+  color: var(--color-text-muted);
 }
 
-.review__title {
+.review__activity-val {
   font-size: var(--fs-2xl);
   font-weight: 800;
-  margin-bottom: var(--space-2);
+  color: var(--color-text);
 }
 
-.review__subtitle {
-  margin-bottom: var(--space-5);
-  line-height: 1.6;
+/* 4. Recommendation Card */
+.review__recommendation-card {
+  background: linear-gradient(135deg, rgba(238, 242, 255, 0.6) 0%, rgba(245, 243, 255, 0.6) 100%);
+  border: 1px solid #c7d2fe;
+  margin-bottom: var(--space-6);
 }
 
-.review__list {
-  list-style: none;
-  margin: 0 0 var(--space-5);
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.review__item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: var(--radius-md);
+.review__recommendation-text {
   font-size: var(--fs-md);
-  font-weight: 600;
+  line-height: 1.5;
+  color: var(--color-text);
+  margin: 0 0 var(--space-4);
 }
 
-.review__item--met {
-  background: var(--color-success-light);
-  color: var(--color-success);
-}
-
-.review__item--unmet {
-  background: var(--color-danger-light);
-  color: var(--color-danger);
-}
-
-.review__icon {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
+.review__recommendation-action {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  font-size: var(--fs-sm);
-  font-weight: 800;
 }
 
-.review__status {
+/* Footer Actions */
+.review__footer-actions {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
   padding-top: var(--space-4);
   border-top: 1px solid var(--color-border);
 }
 
-.review__status-label {
-  font-weight: 700;
-  color: var(--color-text);
-}
-
-.review__actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: var(--space-5);
-}
-
-@media (max-width: 600px) {
-  .review__actions > * {
+@media (max-width: 640px) {
+  .review__topics-grid {
+    grid-template-columns: 1fr;
+  }
+  .review__activity-grid {
+    grid-template-columns: 1fr;
+  }
+  .review__footer-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .review__footer-actions > * {
     width: 100%;
   }
 }

@@ -72,8 +72,38 @@
 }
 
 .course-card__title { margin-top: var(--space-2); font-size: var(--fs-xl); }
-.course-card__description { min-height: 52px; margin-top: var(--space-3); color: var(--color-text-muted); }
-.course-card .progress { margin-top: var(--space-4); }
+.course-card__progress-block {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.course-card__progress-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.course-card__progress-subject {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.course-card__percentage {
+  font-size: var(--fs-md);
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.course-card__progress-block .progress {
+  margin: 0;
+}
 
 .course-card__action {
   display: inline-block;

@@ -14,6 +14,31 @@ import type { AsyncState, Recommendation, Student } from '../types';
 
 const COURSES_HREF = '/courses';
 
+function getRecommendation(student: Student): Recommendation {
+  const activeCourse = COURSE_CATALOG.find(
+    (course) => course.id === student.course.id || course.title === student.course.title
+  );
+
+  if (!activeCourse) {
+    return {
+      id: 'rec-start-learning',
+      title: 'Start your learning journey',
+      reason: 'Choose Mathematics or Physics to begin.',
+      href: COURSES_HREF,
+      actionLabel: 'Choose a subject',
+    };
+  }
+
+  const actionSubject = activeCourse.subject === 'Mathematics' ? 'Math' : activeCourse.subject;
+  return {
+    id: `rec-continue-${activeCourse.id}`,
+    title: `Continue ${activeCourse.subject}`,
+    reason: `Pick up where you left off in ${activeCourse.subject}.`,
+    href: `/courses/${activeCourse.id}`,
+    actionLabel: `Continue ${actionSubject}`,
+  };
+}
+
 export default function Home() {
   const { student, setStudent, journey } = useApp();
   const [state, setState] = useState<AsyncState<{ student: Student; recommendation: Recommendation }>>({
@@ -24,18 +49,11 @@ export default function Home() {
   async function load() {
     setState({ status: 'loading' });
     try {
-      const s = student ?? (await getStudent());
-      if (!student) setStudent(s);
-      const supportedCourse = COURSE_CATALOG.find((course) => course.title === s.course.title);
-      const hasRecognizedProgress = supportedCourse !== undefined && s.overallProgress > 0;
-      const rec: Recommendation = {
-        id: hasRecognizedProgress ? 'rec-continue-learning' : 'rec-start-learning',
-        title: hasRecognizedProgress ? 'Continue Learning' : 'Start Learning',
-        reason: hasRecognizedProgress
-          ? `Continue with ${supportedCourse.title} from the Courses page.`
-          : 'Choose Physics Fundamentals or Math Zero: Foundations to begin.',
-        href: COURSES_HREF,
-      };
+      // Re-read progress on Home so a subject change made elsewhere is shown
+      // immediately instead of using a stale context value.
+      const s = await getStudent();
+      if (JSON.stringify(student) !== JSON.stringify(s)) setStudent(s);
+      const rec = getRecommendation(s);
       setState({ status: 'success', data: { student: s, recommendation: rec } });
     } catch (err) {
       setState({ status: 'error', message: err instanceof Error ? err.message : 'Failed to load your dashboard.' });
@@ -49,7 +67,7 @@ export default function Home() {
   }, [journey]);
 
   const primaryHref = state.status === 'success' ? state.data.recommendation.href : COURSES_HREF;
-  const primaryLabel = state.status === 'success' ? state.data.recommendation.title : 'Start Learning';
+  const primaryLabel = state.status === 'success' ? state.data.recommendation.actionLabel : 'Choose a subject';
   const activeStep = journey.hasCompletedReview
     ? 6
     : journey.hasCompletedSimulation

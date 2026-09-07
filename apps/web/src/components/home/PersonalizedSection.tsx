@@ -45,6 +45,10 @@ function PersonalizedContent({
   recommendation: Recommendation;
 }) {
   const navigate = useNavigate();
+  const activeCourseProgress = student.courseProgress.find(
+    (progress) => progress.courseId === student.course.id
+  );
+  const progressPercentage = activeCourseProgress?.progressPercentage ?? null;
 
   return (
     <Card padding="lg" className="personalized__card">
@@ -54,12 +58,16 @@ function PersonalizedContent({
           <h3 className="personalized__course-title">{recommendation.title}</h3>
         </div>
         <div className="personalized__progress-figure">
-          <span className="personalized__progress-number">{student.overallProgress}%</span>
+          <span className="personalized__progress-number">
+            {progressPercentage === null ? 'Not available yet' : `${progressPercentage}%`}
+          </span>
           <span className="muted personalized__progress-label">Progress</span>
         </div>
       </div>
 
-      <ProgressBar value={student.overallProgress} showPercent={false} tone="primary" />
+      {progressPercentage !== null && (
+        <ProgressBar value={progressPercentage} showPercent={false} tone="primary" />
+      )}
 
       <div className="personalized__grid">
         <div className="personalized__field">
@@ -78,7 +86,7 @@ function PersonalizedContent({
       </p>
 
       <Button size="lg" onClick={() => navigate(recommendation.href)}>
-        {recommendation.title} →
+        {recommendation.actionLabel} →
       </Button>
     </Card>
   );

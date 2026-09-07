@@ -22,6 +22,7 @@ import type {
   ReviewData,
   CompetencyStatus,
   Competency,
+  CourseProgress,
   CoachMode,
   CoachResponse,
   RemediationPlan,
@@ -55,14 +56,43 @@ interface ApiCompetency {
 
 interface ApiProgress {
   overall_progress: number;
-  competencies: { name: string; status: string }[];
-  recommended_next_activity: string;
-  course_code: string;
+  courses: ApiCourseProgress[];
+  last_active_course: string | null;
+  last_lecture: string | null;
+}
+
+interface ApiCourseProgress {
+  course_id: string;
   course_title: string;
+  progress_percentage?: number;
+  completed_lectures?: number;
+  total_lectures?: number;
+  completed_quizzes?: number;
+  total_quizzes?: number;
+  completed_assignments?: number;
+  total_assignments?: number;
 }
 
 function mapCompetency(c: ApiCompetency): Competency {
   return { id: c.id, name: c.name, status: toFrontendStatus(c.status), progress: c.progress };
+}
+
+function toAvailableNumber(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function mapCourseProgress(course: ApiCourseProgress): CourseProgress {
+  return {
+    courseId: course.course_id,
+    courseTitle: course.course_title,
+    progressPercentage: toAvailableNumber(course.progress_percentage),
+    completedLectures: toAvailableNumber(course.completed_lectures),
+    totalLectures: toAvailableNumber(course.total_lectures),
+    completedQuizzes: toAvailableNumber(course.completed_quizzes),
+    totalQuizzes: toAvailableNumber(course.total_quizzes),
+    completedAssignments: toAvailableNumber(course.completed_assignments),
+    totalAssignments: toAvailableNumber(course.total_assignments),
+  };
 }
 
 export async function getStudent(): Promise<Student> {
@@ -72,12 +102,23 @@ export async function getStudent(): Promise<Student> {
     getMe(),
   ]);
 
+  const activeCourse = progress.last_active_course
+    ? progress.courses.find((course) => course.course_id === progress.last_active_course)
+    : undefined;
+
   return {
     id: me.studentId,
     name: me.name,
     email: me.email,
-    course: { id: 'mec271', code: progress.course_code, title: progress.course_title },
+    course: {
+      // No active course means no learning activity has been recorded. Do not
+      // invent a Physics default in the frontend.
+      id: activeCourse?.course_id ?? '',
+      code: activeCourse?.course_id?.toUpperCase() ?? '',
+      title: activeCourse?.course_title ?? '',
+    },
     overallProgress: progress.overall_progress,
+    courseProgress: progress.courses.map(mapCourseProgress),
     competencies: competencies.map(mapCompetency),
   };
 }

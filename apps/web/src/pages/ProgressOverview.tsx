@@ -6,9 +6,20 @@ import ProgressBar from '../components/ui/ProgressBar';
 import CompetencyCard from '../components/domain/CompetencyCard';
 import { LoadingState, ErrorState } from '../components/ui/StateViews';
 import { getStudent } from '../data/mockApi';
+import { COURSE_CATALOG } from '../data/courses';
 import { useApp } from '../state/AppContext';
-import type { AsyncState, Student } from '../types';
+import type { AsyncState, CourseProgress, Student } from '../types';
 import './ProgressOverview.css';
+
+function subjectLabel(progress: CourseProgress) {
+  return COURSE_CATALOG.find(
+    (course) => course.id === progress.courseId || course.title === progress.courseTitle
+  )?.subject ?? progress.courseTitle;
+}
+
+function activityLabel(completed: number | null, total: number | null) {
+  return completed !== null && total !== null ? `${completed}/${total}` : 'Not available yet';
+}
 
 export default function ProgressOverview() {
   const navigate = useNavigate();
@@ -53,12 +64,6 @@ export default function ProgressOverview() {
   }
 
   const s = state.data;
-  const completedActivities = [
-    journey.hasCompletedLearning && 'Learning',
-    journey.hasCompletedPractice && 'Practice',
-    journey.hasCompletedSimulation && 'Simulation',
-    journey.hasCompletedReview && 'Review',
-  ].filter(Boolean) as string[];
   const journeySteps = [
     { label: 'Find your starting point', done: journey.hasCompletedDiagnostic, href: '/my-learning/diagnostic' },
     { label: 'Choose a course', done: journey.hasCompletedLearning, href: '/courses' },
@@ -67,28 +72,36 @@ export default function ProgressOverview() {
     { label: 'Review your evidence', done: journey.hasCompletedReview, href: '/apply-review/review' },
   ];
   const nextStep = journeySteps.find((step) => !step.done) ?? null;
-  const isComplete = s.overallProgress >= 100;
-
   return (
     <div className="page">
       <button className="progress-overview__back" type="button" onClick={() => navigate('/home')}>← Back</button>
       <div className="progress-overview__header">
         <h1 className="progress-overview__title">Your Progress</h1>
-        <p className="muted">{s.course.code} — {s.course.title}</p>
+        <p className="muted">Progress is reported separately for each subject.</p>
       </div>
 
-      {isComplete ? (
-        <Card padding="lg" className="progress-overview__complete">
-          <div className="progress-overview__complete-icon" aria-hidden="true">✓</div>
-          <div><h2>Learning journey completed</h2><p className="muted">You completed the activities in this learning path.</p></div>
-          <Button onClick={() => navigate('/home')}>Back to Home →</Button>
-        </Card>
-      ) : (
-        <Card padding="lg" className="progress-overview__summary">
-          <div className="progress-overview__summary-top"><div><span className="progress-overview__summary-label">Overall learning progress</span><strong className="progress-overview__percentage">{s.overallProgress}%</strong></div><span className="muted">Keep going</span></div>
-          <ProgressBar value={s.overallProgress} label="Overall Course Progress" tone="primary" size="md" />
-        </Card>
-      )}
+      <section className="progress-overview__subjects" aria-labelledby="subject-progress-title">
+        <h2 id="subject-progress-title" className="progress-overview__subheading">Subject progress</h2>
+        {s.courseProgress.length === 0 ? (
+          <Card padding="lg"><p className="muted">No subject activity is available yet.</p></Card>
+        ) : (
+          <div className="grid grid-2 progress-overview__grid">
+            {s.courseProgress.map((progress) => (
+              <Card padding="lg" key={progress.courseId} className="progress-overview__subject-card">
+                <span className="progress-overview__kicker">{subjectLabel(progress)}</span>
+                <h3>{progress.courseTitle}</h3>
+                <strong className="progress-overview__percentage">{progress.progressPercentage ?? 0}% Complete</strong>
+                <ProgressBar value={progress.progressPercentage ?? 0} label={`${subjectLabel(progress)} progress`} tone="primary" size="md" />
+                <dl className="progress-overview__activity-breakdown">
+                  <div><dt>Lectures</dt><dd>{activityLabel(progress.completedLectures, progress.totalLectures)}</dd></div>
+                  <div><dt>Quizzes</dt><dd>{activityLabel(progress.completedQuizzes, progress.totalQuizzes)}</dd></div>
+                  <div><dt>Assignments</dt><dd>{activityLabel(progress.completedAssignments, progress.totalAssignments)}</dd></div>
+                </dl>
+              </Card>
+            ))}
+          </div>
+        )}
+      </section>
 
       <div className="progress-overview__dashboard-grid">
         <Card padding="lg" className="progress-overview__journey">
@@ -102,8 +115,6 @@ export default function ProgressOverview() {
           {nextStep ? <><h2>{nextStep.label}</h2><p>Follow the path one step at a time. Your next activity is ready.</p><Button onClick={() => navigate(nextStep.href)}>Continue →</Button></> : <><h2>You are all caught up.</h2><p>Review your skills or return home to choose another activity.</p><Button onClick={() => navigate('/home')}>Back to Home →</Button></>}
         </Card>
       </div>
-
-      {completedActivities.length > 0 && <Card padding="lg" className="progress-overview__activities"><div className="progress-overview__section-heading"><div><span className="progress-overview__kicker">What you have done</span><h2>Completed activities</h2></div></div><div className="progress-overview__activity-list">{completedActivities.map((activity) => <span key={activity} className="progress-overview__activity">✓ {activity}</span>)}</div></Card>}
 
       <h2 className="progress-overview__subheading">Competencies</h2>
       <div className="grid grid-2 progress-overview__grid">

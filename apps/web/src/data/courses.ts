@@ -1,3 +1,5 @@
+import type { CourseProgress, Student } from '../types';
+
 export interface CourseCatalogItem {
   id: string;
   title: string;
@@ -14,6 +16,34 @@ export interface CourseLecture {
   number: number;
   title: string;
   completed?: boolean;
+}
+
+export interface CourseTopic {
+  id: string;
+  name: string;
+  category?: string;
+}
+
+export const COURSE_TOPICS: Record<string, CourseTopic[]> = {
+  'math-zero-foundations': [
+    { id: 'algebra', name: 'Algebra' },
+    { id: 'functions', name: 'Functions' },
+    { id: 'quadratic-equations', name: 'Quadratic Equations' },
+    { id: 'trigonometry', name: 'Trigonometry' },
+    { id: 'numbers-operations', name: 'Numbers and Operations' },
+    { id: 'equations', name: 'Patterns and Equations' },
+  ],
+  'physics-fundamentals': [
+    { id: 'motion-kinematics', name: 'Motion and Kinematics' },
+    { id: 'forces-energy', name: 'Forces and Energy' },
+    { id: 'newtons-laws', name: "Newton's Laws" },
+    { id: 'work-power', name: 'Work and Power' },
+    { id: 'vectors-scalars', name: 'Vectors and Scalars' },
+  ],
+};
+
+export function getTopicsForCourse(courseId: string): CourseTopic[] {
+  return COURSE_TOPICS[courseId] ?? [];
 }
 
 export const COURSE_CATALOG: CourseCatalogItem[] = [
@@ -43,6 +73,28 @@ export function getCourseById(courseId: string) {
   return COURSE_CATALOG.find((course) => course.id === courseId);
 }
 
+export function getCourseProgress(
+  student: Student | null | undefined,
+  course: CourseCatalogItem
+): CourseProgress | undefined {
+  if (!student?.courseProgress) return undefined;
+  return student.courseProgress.find(
+    (p) =>
+      p.courseId === course.id ||
+      p.courseTitle.toLowerCase() === course.title.toLowerCase() ||
+      (p.courseId === 'physics' && course.id === 'physics-fundamentals') ||
+      (p.courseId === 'math-zero' && course.id === 'math-zero-foundations')
+  );
+}
+
+export function getCoursePercentage(
+  student: Student | null | undefined,
+  course: CourseCatalogItem
+): number {
+  const progress = getCourseProgress(student, course);
+  return Math.max(0, Math.min(100, Math.round(progress?.progressPercentage ?? 0)));
+}
+
 const COURSE_LECTURES: Record<string, CourseLecture[]> = {
   'physics-fundamentals': [
     { id: 'introduction-to-physics', number: 1, title: 'Introduction to Physics' },
@@ -62,4 +114,4 @@ export function getLecturesForCourse(courseId: string) {
 
 export function getLectureById(courseId: string, lectureId: string) {
   return getLecturesForCourse(courseId).find((lecture) => lecture.id === lectureId);
-}
+}

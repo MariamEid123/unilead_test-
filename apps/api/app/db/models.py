@@ -70,6 +70,12 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, nullable=False)
 
     students: Mapped[list[Student]] = relationship("Student", back_populates="user")
+    course_progress_records: Mapped[list[CourseProgress]] = relationship(
+        "CourseProgress", back_populates="user", cascade="all, delete-orphan"
+    )
+    lecture_progress_records: Mapped[list[LectureProgress]] = relationship(
+        "LectureProgress", back_populates="user", cascade="all, delete-orphan"
+    )
 
 
 class Student(Base):
@@ -115,6 +121,49 @@ class Student(Base):
     evidence_events: Mapped[list[EvidenceEvent]] = relationship(
         "EvidenceEvent", back_populates="student", cascade="all, delete-orphan"
     )
+
+
+class CourseProgress(Base):
+    """A user's independent, persisted progress for one active course."""
+
+    __tablename__ = "course_progress"
+    __table_args__ = (UniqueConstraint("user_id", "course_id", name="uq_course_progress_user_course"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
+    course_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    progress_percentage: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    completed_lectures_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_lectures: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    completed_quizzes_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_quizzes: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    completed_assignments_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_assignments: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    simulation_status: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    review_status: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    last_lecture_id: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    last_accessed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, onupdate=_utcnow, nullable=False)
+
+    user: Mapped[User] = relationship("User", back_populates="course_progress_records")
+
+
+class LectureProgress(Base):
+    """Completion state for a catalogue lecture; unique per user and lecture."""
+
+    __tablename__ = "lecture_progress"
+    __table_args__ = (UniqueConstraint("user_id", "lecture_id", name="uq_lecture_progress_user_lecture"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
+    course_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    lecture_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    completed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, onupdate=_utcnow, nullable=False)
+
+    user: Mapped[User] = relationship("User", back_populates="lecture_progress_records")
 
 
 class CompetencySnapshot(Base):

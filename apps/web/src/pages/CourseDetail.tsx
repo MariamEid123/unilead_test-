@@ -26,6 +26,12 @@ const ASSIGNMENT_TITLES: Record<string, string[]> = {
   'math-zero-foundations': ['Number practice set', 'Equation application', 'Foundations reflection'],
 };
 
+function formatActivity(completed: number | null | undefined, total: number | null | undefined) {
+  return completed !== null && completed !== undefined && total !== null && total !== undefined
+    ? `${completed}/${total}`
+    : 'Not available yet';
+}
+
 export default function CourseDetail() {
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -38,7 +44,7 @@ export default function CourseDetail() {
 
   if (!course) return <NotFound />;
 
-  const progress = student?.course.title === course.title ? student.overallProgress : undefined;
+  const progress = student?.courseProgress.find((item) => item.courseId === course.id);
   const lectures = getLecturesForCourse(course.id);
   const firstLecture = lectures[0];
 
@@ -74,11 +80,11 @@ export default function CourseDetail() {
               <h2 id="course-overview-title">A clear path from the basics to confidence</h2>
               <p className="muted">{course.description}</p>
               <div className="course-detail__stats" aria-label="Course contents summary">
-                <div><strong>{course.lectures}</strong><span>Lectures</span></div>
-                <div><strong>{course.quizzes}</strong><span>Quizzes</span></div>
-                <div><strong>{course.assignments}</strong><span>Assignments</span></div>
+                <div><strong>{formatActivity(progress?.completedLectures, progress?.totalLectures)}</strong><span>Lectures</span></div>
+                <div><strong>{formatActivity(progress?.completedQuizzes, progress?.totalQuizzes)}</strong><span>Quizzes</span></div>
+                <div><strong>{formatActivity(progress?.completedAssignments, progress?.totalAssignments)}</strong><span>Assignments</span></div>
               </div>
-              {progress !== undefined && <ProgressBar value={progress} label="Your progress" />}
+              {progress?.progressPercentage !== null && progress?.progressPercentage !== undefined && <ProgressBar value={progress.progressPercentage} label="Your progress" />}
               <Button
                 onClick={() => {
                   if (firstLecture) {
@@ -87,7 +93,7 @@ export default function CourseDetail() {
                 }}
                 disabled={!firstLecture}
               >
-                {progress && progress > 0 ? 'Continue learning' : 'Start learning'}
+                {progress?.progressPercentage && progress.progressPercentage > 0 ? 'Continue learning' : 'Start learning'}
               </Button>
             </section>
           )}
@@ -118,7 +124,7 @@ export default function CourseDetail() {
                     </Link>
                   </div>
                 ))}
-                {activeSection !== 'lectures' && (activeSection === 'quizzes' ? QUIZ_TITLES[course.id] : activeSection === 'assignments' ? ASSIGNMENT_TITLES[course.id] : []).map((title, index) => (
+                {activeSection !== 'lectures' && (activeSection === 'quizzes' ? (QUIZ_TITLES[course.id] ?? []) : activeSection === 'assignments' ? (ASSIGNMENT_TITLES[course.id] ?? []) : []).map((title, index) => (
                   <div className="course-detail__list-item" key={title}>
                     <span className="course-detail__list-number">{String(index + 1).padStart(2, '0')}</span>
                     <span>{title}</span>

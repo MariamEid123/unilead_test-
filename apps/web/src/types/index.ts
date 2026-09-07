@@ -20,12 +20,25 @@ export interface Course {
   title: string; // e.g. Automatic Control
 }
 
+export interface CourseProgress {
+  courseId: string;
+  courseTitle: string;
+  progressPercentage: number | null;
+  completedLectures: number | null;
+  totalLectures: number | null;
+  completedQuizzes: number | null;
+  totalQuizzes: number | null;
+  completedAssignments: number | null;
+  totalAssignments: number | null;
+}
+
 export interface Student {
   id: string;
   name: string;
   email: string;
   course: Course;
   overallProgress: number; // 0-100
+  courseProgress: CourseProgress[];
   competencies: Competency[];
 }
 
@@ -64,6 +77,7 @@ export interface Recommendation {
   title: string;
   reason: string;
   href: string;
+  actionLabel: string;
 }
 
 export interface LessonSection {

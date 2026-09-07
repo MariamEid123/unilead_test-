@@ -16,7 +16,7 @@ export default function RecommendationCard({ recommendation }: { recommendation:
         <p className="recommendation-card__reason muted">{recommendation.reason}</p>
       </div>
       <Button onClick={() => navigate(recommendation.href)}>
-        Start Now
+        {recommendation.actionLabel}
       </Button>
     </Card>
   );
