@@ -1,0 +1,125 @@
+"""Unified configuration for the Compass + AI Education gateway.
+
+Combines the original Platform/backend config (CORS origins, host, port)
+with the AI Education LLM provider settings (provider type, model, keys).
+Everything is read from environment variables (or an optional .env file),
+so the server can be launched identically in dev and deployment.
+"""
+
+from pathlib import Path
+from typing import Literal
+
+from pydantic import model_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# --- Path bootstrap ---------------------------------------------------------
+# Make ``python -m app.main`` and ``uvicorn app.main:app`` work from the
+# apps/api directory: insert the ai_education library directory on sys.path
+# so its package is importable without pip-installing it.
+_APP_DIR = Path(__file__).resolve().parent  # apps/api/app
+_API_DIR = _APP_DIR.parent  # apps/api
+_REPO_ROOT = _API_DIR.parents[1]  # arete-unified/
+_AI_EDUCATION_DIR = _REPO_ROOT / "services" / "ai_education"
+
+import sys  # noqa: E402
+
+for _directory in (str(_AI_EDUCATION_DIR), str(_API_DIR)):
+    if _directory not in sys.path:
+        sys.path.insert(0, _directory)
+
+# Re-export so other modules can use the same paths
+AI_EDUCATION_DIR = _AI_EDUCATION_DIR
+REPO_ROOT = _REPO_ROOT
+
+
+DEFAULT_ORIGINS = "http://localhost:5173,http://127.0.0.1:5173"
+
+LLM_PROVIDER_TYPES = ("mock", "ollama", "openai")
+
+# Known placeholder secrets that must never be used in production.
+_DEFAULT_JWT_SECRETS = {
+    "change-me-in-production-please-use-a-long-random-string",
+    "dev-secret-change-me",
+}
+
+
+class Settings(BaseSettings):
+    """Server + LLM + DB + auth configuration read from the environment."""
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    # --- Server (Compass API) ---
+    host: str = "0.0.0.0"
+    port: int = 8000
+    cors_origins: str = DEFAULT_ORIGINS
+
+    # --- Database ---
+    database_url: str = "sqlite:///./arete.db"
+
+    # --- Auth (JWT) ---
+    jwt_secret: str = "change-me-in-production-please-use-a-long-random-string"
+    jwt_algorithm: str = "HS256"
+    jwt_expire_minutes: int = 1440  # 24 hours
+
+    # --- Env flag to enforce production secret ---
+    enforce_jwt_secret: bool = False
+
+    # --- Environment (production disables Swagger/ReDoc) ---
+    env: str = "development"
+
+    # --- LLM provider (AI Education gateway) ---
+    llm_provider_type: Literal["mock", "ollama", "openai"] = "mock"
+    llm_model: str | None = None
+    openai_api_key: str | None = None
+    openai_base_url: str = "https://api.openai.com/v1"
+    ollama_base_url: str = "http://localhost:11434"
+
+    # --- AI Education student session ---
+    student_id: str = "api-gateway-student"
+    course_id: str = "MEC271"
+
+    # --- Email verification (signup confirmation code) ---
+    # backend: "log" prints the code to the server console (dev/demo);
+    # "smtp" sends a real email via SMTP (configure smtp_* below).
+    email_backend: str = "log"
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_username: str = ""
+    smtp_password: str = ""
+    smtp_from_email: str = "no-reply@compass.edu"
+    smtp_starttls: bool = True
+    verification_code_length: int = 6
+    verification_code_ttl_minutes: int = 15
+    verification_resend_cooldown_seconds: int = 60
+    verification_max_attempts: int = 5
+
+    @model_validator(mode="after")
+    def validate_production_settings(self) -> "Settings":
+        """Fail fast on unsafe production config so the API never boots weak.
+
+        Development/demo environments keep the permissive defaults (so
+        `uvicorn app.main:app` still runs with zero config); production
+        requires a real JWT secret and real email delivery.
+        """
+        if self.env != "production":
+            return self
+        if self.jwt_secret in _DEFAULT_JWT_SECRETS or len(self.jwt_secret) < 32:
+            raise ValueError(
+                "In production, JWT_SECRET must be a unique random string of "
+                "at least 32 characters."
+            )
+        if self.email_backend != "smtp" or not self.smtp_host:
+            raise ValueError(
+                "In production, EMAIL_BACKEND must be 'smtp' with SMTP_HOST set "
+                "(verification and password-reset emails need real delivery)."
+            )
+        return self
+
+
+def get_cors_origins() -> list[str]:
+    """Return the list of allowed CORS origins (comma-separated string)."""
+    return [origin.strip() for origin in Settings().cors_origins.split(",") if origin.strip()]

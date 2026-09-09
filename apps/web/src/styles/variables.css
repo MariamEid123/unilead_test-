@@ -1,0 +1,104 @@
+:root {
+  /* Brand colors — derived from the ARETE logo (orange robot on warm light
+     background with dark slate details). The logo is the single source of
+     truth for the palette; lighter/darker shades are used for states. */
+  --color-primary: #F16409;         /* brand orange — primary CTAs, key actions */
+  --color-primary-dark: #C25106;    /* deep orange — hover/pressed primary */
+  --color-primary-light: #FFEDDC;   /* light orange tint — soft brand surfaces */
+  --color-indigo: #D95505;          /* supporting orange — secondary brand */
+  --color-accent: #FF8A3B;          /* bright orange — highlights, progress, focus */
+  --color-accent-dark: #E06A0F;     /* darkened accent for hover on accent UI */
+  --color-accent-light: #FFF1E2;    /* faint accent tint — rings, chips, badges */
+  --color-on-tint: #C25106;         /* text/icons on tinted surfaces (badges) */
+  --color-navy: #2E313A;            /* dark slate from the logo — nav, dark panels */
+
+  /* Status colors */
+  --color-success: #22a06b;
+  --color-success-light: #e6f7ef;
+  --color-warning: #d99a1f;
+  --color-warning-light: #fff6e0;
+  --color-danger: #e5484d;
+  --color-danger-light: #fdeaea;
+  --color-neutral: #8a94a6;
+  --color-neutral-light: #f1f2f5;
+
+  /* Text */
+  --color-text: #26292e;
+  --color-text-muted: #454a52;
+  --color-text-faint: #686d76;
+
+  /* Surfaces */
+  --color-bg: #FCFBF7;
+  --color-surface: #FFFFFF;
+  --color-border: #E9E3D8;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 12px 32px rgba(15, 23, 42, 0.10);
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Type */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: 1.75rem;
+  --fs-3xl: 2.25rem;
+
+  --max-width: 1320px;
+}
+
+/* Dark mode — same tokens, dark values. Applied via the `.dark` class on
+   <html> (see index.html flash-guard + AppContext theme state). */
+.dark {
+  --color-primary: #F16409;
+  --color-primary-dark: #C25106;
+  --color-primary-light: #332619;
+  --color-indigo: #EA7A2E;
+  --color-accent: #FF8A3B;
+  --color-accent-dark: #E06A0F;
+  --color-accent-light: #352616;
+  --color-on-tint: #FFA45C;
+  --color-navy: #1B2433;
+
+  /* Status colors — brightened for dark surfaces, tints darkened */
+  --color-success: #34D399;
+  --color-success-light: #0E241C;
+  --color-warning: #F5B93C;
+  --color-warning-light: #2A2010;
+  --color-danger: #F87171;
+  --color-danger-light: #2C1618;
+  --color-neutral: #9AA3B2;
+  --color-neutral-light: #232B38;
+
+  /* Text */
+  --color-text: #EDEEF2;
+  --color-text-muted: #A6ADBA;
+  --color-text-faint: #7C8391;
+
+  /* Surfaces */
+  --color-bg: #0B1120;
+  --color-surface: #141C2C;
+  --color-border: #263049;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.45);
+}

@@ -1,0 +1,198 @@
+.journey {
+  background: var(--color-surface);
+  scroll-margin-top: 80px;
+}
+
+.journey__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5) var(--space-8);
+}
+
+.journey__heading {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.journey__title {
+  font-size: clamp(1.75rem, 3.4vw, var(--fs-3xl));
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.journey__subtitle {
+  max-width: 480px;
+  margin: var(--space-3) auto 0;
+  font-size: var(--fs-lg);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.journey__track {
+  position: relative;
+  overflow: hidden;
+}
+
+.journey__timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-4);
+}
+
+.journey__track::before {
+  content: '';
+  position: absolute;
+  top: 26px;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-light);
+}
+
+.journey__line-fill {
+  position: absolute;
+  top: 26px;
+  left: 10%;
+  width: var(--fill-w);
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.journey__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-top: 2px;
+}
+
+.journey__marker {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-full);
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: var(--fs-sm);
+  position: relative;
+  z-index: 2;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.journey__marker:hover {
+  transform: translateY(-2px);
+}
+
+.journey__marker--completed {
+  background: var(--color-accent);
+  color: var(--color-primary-dark);
+}
+
+.journey__marker--completed:hover {
+  box-shadow: 0 0 0 6px var(--color-accent-light);
+}
+
+.journey__check {
+  width: 20px;
+  height: 20px;
+}
+
+.journey__marker--current {
+  background: var(--color-primary);
+  color: var(--color-surface);
+  box-shadow: 0 0 0 6px var(--color-primary-light);
+  animation: journey-pulse 2.4s ease-in-out infinite;
+}
+
+.journey__marker--current:hover {
+  box-shadow: 0 0 0 8px var(--color-primary-light);
+}
+
+.journey__marker--upcoming {
+  background: var(--color-neutral-light);
+  color: var(--color-text-faint);
+  border: 1px solid var(--color-border);
+}
+
+@keyframes journey-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px var(--color-primary-light); }
+  50% { box-shadow: 0 0 0 9px var(--color-primary-light); }
+}
+
+.journey__step-body {
+  max-width: 200px;
+}
+
+.journey__step-label {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.journey__step--upcoming .journey__step-label,
+.journey__step--upcoming .journey__step-description {
+  color: var(--color-text-faint);
+}
+
+.journey__step--current .journey__step-label {
+  color: var(--color-primary);
+}
+
+.journey__step-description {
+  margin-top: var(--space-1);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey__marker--current { animation: none; }
+}
+
+@media (max-width: 980px) {
+  .journey__timeline {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .journey__track::before {
+    top: 26px;
+    bottom: 26px;
+    left: 25px;
+    right: auto;
+    width: 3px;
+    height: auto;
+  }
+
+  .journey__line-fill {
+    top: 26px;
+    bottom: 26px;
+    left: 25px;
+    width: 3px;
+    height: var(--fill);
+    background: linear-gradient(180deg, var(--color-primary), var(--color-accent));
+  }
+
+  .journey__step {
+    flex-direction: row;
+    align-items: flex-start;
+    padding-bottom: var(--space-5);
+  }
+
+  .journey__step-body {
+    max-width: none;
+  }
+}

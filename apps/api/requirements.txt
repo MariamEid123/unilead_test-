@@ -1,0 +1,37 @@
+# Arete API (apps/api) - Python dependencies
+
+# Web framework
+fastapi==0.139.1
+uvicorn[standard]==0.32.1
+
+# Validation + settings
+pydantic==2.10.3
+pydantic-settings>=2.5.0
+
+# HTTP client: httpx2 is used by Starlette's TestClient (1.3+); plain httpx
+# is still required by ai_education (AsyncClient for Ollama/OpenAI providers).
+httpx==0.28.1
+httpx2==2.12.0
+
+# Database (SQLAlchemy 2.0 sync API)
+# Default local dev: SQLite (zero-config). Production: PostgreSQL via psycopg3.
+sqlalchemy>=2.0,<3.0
+psycopg[binary]>=3.1
+
+# Password hashing (bcrypt)
+bcrypt>=4.0
+
+# JWT tokens
+python-jose[cryptography]>=3.3.0
+
+# Email validation
+email-validator>=2.0
+
+# Migrations
+alembic>=1.13
+
+# Testing
+pytest>=8.0
+
+# Linting
+ruff>=0.8.0

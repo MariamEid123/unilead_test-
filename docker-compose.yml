@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-arete}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-arete_dev}
+      - POSTGRES_DB=${POSTGRES_DB:-arete}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-arete} -d ${POSTGRES_DB:-arete}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    build: ./apps/api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+psycopg://${POSTGRES_USER:-arete}:${POSTGRES_PASSWORD:-arete_dev}@postgres:5432/${POSTGRES_DB:-arete}
+      - JWT_SECRET=${JWT_SECRET:-dev-secret-change-me}
+      - ENFORCE_JWT_SECRET=${ENFORCE_JWT_SECRET:-false}
+      - LLM_PROVIDER_TYPE=${LLM_PROVIDER_TYPE:-mock}
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:80
+      - ENV=development
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["sh", "-c", "alembic upgrade head && python -m app.main"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/healthz').raise_for_status()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  web:
+    build: ./apps/web
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
